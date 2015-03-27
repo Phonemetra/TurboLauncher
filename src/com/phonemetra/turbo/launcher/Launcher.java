@@ -62,4 +62,8 @@ public class Launcher extends Activity
            private static final String RUNTIME_STATE_PENDING_ADD_SCREEN = "launcher.add_screen";
            // Type: int
            private static final String RUNTIME_STATE_PENDING_ADD_CELL_X = "launcher.add_cell_x";
+           // Type: int
+           private static final String RUNTIME_STATE_PENDING_ADD_CELL_Y = "launcher.add_cell_y";
+           // Type: boolean
+           private static final String RUNTIME_STATE_PENDING_FOLDER_RENAME = "launcher.rename_folder";
            
