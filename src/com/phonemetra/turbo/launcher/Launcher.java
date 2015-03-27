@@ -16,3 +16,14 @@
 */
 
 package com.phonemetra.turbo.launcher;
+
+
+
+
+/**
+* Default launcher application.
+*/
+public class Launcher extends Activity
+              implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
+                         View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener {
+          static final String TAG = "Launcher";
