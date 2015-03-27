@@ -27,3 +27,14 @@ public class Launcher extends Activity
               implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
                          View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener {
           static final String TAG = "Launcher";
+          
+          private static final int REQUEST_CREATE_SHORTCUT = 1;
+          private static final int REQUEST_CREATE_APPWIDGET = 5;
+          private static final int REQUEST_PICK_SHORTCUT = 7;
+          private static final int REQUEST_PICK_APPWIDGET = 9;
+          private static final int REQUEST_PICK_WALLPAPER = 10;
+
+          private static final int REQUEST_BIND_APPWIDGET = 11;
+          private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
+          
+          public static final int REQUEST_TRANSITION_EFFECTS = 14;
