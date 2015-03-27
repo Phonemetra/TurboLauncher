@@ -22,3 +22,5 @@
     package="com.phonemetra.turbo.launcher"
     android:versionName="@string/application_version"
     android:versionCode="1">
+    
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="22" />
