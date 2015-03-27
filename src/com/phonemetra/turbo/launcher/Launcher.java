@@ -38,3 +38,16 @@ public class Launcher extends Activity
           private static final int REQUEST_RECONFIGURE_APPWIDGET = 12;
           
           public static final int REQUEST_TRANSITION_EFFECTS = 14;
+          
+          /**
+           * IntentStarter uses request codes starting with this. This must be greater than all activity
+           * request codes used internally.
+           */
+           protected static final int REQUEST_LAST = 100;
+           
+           static final String EXTRA_SHORTCUT_DUPLICATE = "duplicate";
+           
+           static final int SCREEN_COUNT = 5;
+           static final int DEFAULT_SCREEN = 2;
+           
+           private static final String PREFERENCES = "launcher.preferences";
