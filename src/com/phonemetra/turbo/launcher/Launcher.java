@@ -51,3 +51,15 @@ public class Launcher extends Activity
            static final int DEFAULT_SCREEN = 2;
            
            private static final String PREFERENCES = "launcher.preferences";
+           
+           // Type: int
+           private static final String RUNTIME_STATE_CURRENT_SCREEN = "launcher.current_screen";
+           // Type: int
+           private static final String RUNTIME_STATE = "launcher.state";
+           // Type: int
+           private static final String RUNTIME_STATE_PENDING_ADD_CONTAINER = "launcher.add_container";
+           // Type: int
+           private static final String RUNTIME_STATE_PENDING_ADD_SCREEN = "launcher.add_screen";
+           // Type: int
+           private static final String RUNTIME_STATE_PENDING_ADD_CELL_X = "launcher.add_cell_x";
+           
