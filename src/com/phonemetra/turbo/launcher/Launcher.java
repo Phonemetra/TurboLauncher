@@ -74,4 +74,16 @@ public class Launcher extends Activity
            private static final String RUNTIME_STATE_PENDING_ADD_SPAN_Y = "launcher.add_span_y";
            // Type: parcelable
            private static final String RUNTIME_STATE_PENDING_ADD_WIDGET_INFO = "launcher.add_widget_info";
+           // Type: parcelable
+           private static final String RUNTIME_STATE_PENDING_ADD_WIDGET_ID = "launcher.add_widget_id";
+           // Type: int[]
+           private static final String RUNTIME_STATE_VIEW_IDS = "launcher.view_ids";
+           
+           static final String INTRO_SCREEN_DISMISSED = "launcher.intro_screen_dismissed";
+           static final String FIRST_RUN_ACTIVITY_DISPLAYED = "launcher.first_run_activity_displayed";
+           
+           /** The different states that Launcher can be in. */
+           private enum State { NONE, WORKSPACE, APPS_CUSTOMIZE, APPS_CUSTOMIZE_SPRING_LOADED };
+           private State mState = State.WORKSPACE;
+           private AnimatorSet mStateAnimation;
            
