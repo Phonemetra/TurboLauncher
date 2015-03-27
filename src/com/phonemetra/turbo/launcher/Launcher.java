@@ -87,3 +87,13 @@ public class Launcher extends Activity
            private State mState = State.WORKSPACE;
            private AnimatorSet mStateAnimation;
            
+            private boolean mIsSafeModeEnabled;
+            
+            static final int APPWIDGET_HOST_ID = 1024;
+            public static final int EXIT_SPRINGLOADED_MODE_SHORT_TIMEOUT = 300;
+            private static final int ON_ACTIVITY_RESULT_ANIMATION_DELAY = 500;
+            private static final int ACTIVITY_START_DELAY = 1000;
+
+            private static final Object sLock = new Object();
+            private static int sScreen = DEFAULT_SCREEN;
+           
