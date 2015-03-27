@@ -91,6 +91,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.MONKEY"/>
             </intent-filter>
-        </activity>    
+        </activity>
+        
+        <activity
+            android:name="com.phonemetra.turbo.launcher.LauncherWallpaperPickerActivity"
+            android:theme="@style/Theme.WallpaperPicker"
+            android:label="@string/pick_wallpaper"
+            android:icon="@drawable/ic_launcher_wallpaper"
+            android:finishOnCloseSystemDialogs="true"
+            android:process=":wallpaper_chooser">
+            <intent-filter>
+                <action android:name="android.intent.action.SET_WALLPAPER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
 </manifest>
