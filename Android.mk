@@ -14,3 +14,12 @@
 # limitations under the License.
 #
 LOCAL_PATH := $(call my-dir)
+
+#
+# Build app code.
+#
+include $(CLEAR_VARS)
+
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
