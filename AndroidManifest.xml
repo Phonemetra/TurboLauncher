@@ -127,6 +127,24 @@
             <intent-filter>
                 <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
             </intent-filter>
-        </receiver>    
+        </receiver>
+        
+        <!-- Intent received used to uninstall shortcuts from other applications -->
+        <receiver
+            android:name="com.phonemetra.turbo.launcher.UninstallShortcutReceiver"
+            android:permission="com.android.launcher.permission.UNINSTALL_SHORTCUT">
+            <intent-filter>
+                <action android:name="com.android.launcher.action.UNINSTALL_SHORTCUT" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- New user initialization; set up initial wallpaper -->
+        <receiver
+            android:name="com.phonemetra.turbo.launcher.UserInitializeReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_INITIALIZE" />
+            </intent-filter>
+        </receiver>
 
 </manifest>
