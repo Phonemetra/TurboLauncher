@@ -76,6 +76,15 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         // Register for changes to the favorites
         ContentResolver resolver = sContext.getContentResolver();
         resolver.registerContentObserver(LauncherSettings.Favorites.CONTENT_URI, true,
-        mFavoritesObserver);
+                mFavoritesObserver);
         
     }
+    
+    public void recreateWidgetPreviewDb() {
+        if (mWidgetPreviewCacheDb != null) {
+            mWidgetPreviewCacheDb.close();
+        }
+            mWidgetPreviewCacheDb = new WidgetPreviewLoader.CacheDb(sContext);
+    }
+    
+}    
