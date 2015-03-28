@@ -43,3 +43,39 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         }
         return INSTANCE;
     }
+    
+    public static LauncherAppState getInstanceNoCreate() {
+        return INSTANCE;
+    }
+    
+    public Context getContext() {
+        return sContext;
+    }
+    
+    public static void setApplicationContext(Context context) {
+        sContext = context.getApplicationContext();
+    }
+    
+    private LauncherAppState() {
+        if (sContext == null) {
+            throw new IllegalStateException("LauncherAppState inited before app context set");
+        }
+        
+        mIsScreenLarge = isScreenLarge(sContext.getResources());
+        mScreenDensity = sContext.getResources().getDisplayMetrics().density;
+        
+        recreateWidgetPreviewDb();
+        mIconCache = new IconCache(sContext);
+        
+        mAppFilter = AppFilter.loadByName(sContext.getString(R.string.app_filter_class));
+        mBuildInfo = BuildInfo.loadByName(sContext.getString(R.string.build_info_class));
+        mModel = new LauncherModel(this, mIconCache, mAppFilter);
+        
+        // Register intent receivers
+        
+        // Register for changes to the favorites
+        ContentResolver resolver = sContext.getContentResolver();
+        resolver.registerContentObserver(LauncherSettings.Favorites.CONTENT_URI, true,
+        mFavoritesObserver);
+        
+    }
