@@ -119,5 +119,14 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+        
+        <!-- Intent received used to install shortcuts from other applications -->
+        <receiver
+            android:name="com.phonemetra.turbo.launcher.InstallShortcutReceiver"
+            android:permission="com.android.launcher.permission.INSTALL_SHORTCUT">
+            <intent-filter>
+                <action android:name="com.android.launcher.action.INSTALL_SHORTCUT" />
+            </intent-filter>
+        </receiver>    
 
 </manifest>
