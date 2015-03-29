@@ -147,13 +147,24 @@
             </intent-filter>
         </receiver>
         
-        <receiver android:name="com.phonemetra.turbo.launcher..PackageChangedReceiver" >
+        <receiver android:name="com.phonemetra.turbo.launcher.PackageChangedReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_CHANGED"/>
                 <action android:name="android.intent.action.PACKAGE_REPLACED"/>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
                 <data android:scheme="package"></data>
             </intent-filter>
-        </receiver>    
+        </receiver>
+        
+        <!-- The settings provider contains Home's data, like the workspace favorites -->
+        <provider
+            android:name="com.phonemetra.turbo.launcher.LauncherProvider"
+            android:authorities="com.phonemetra.turbo.launcher.premium.settings"
+            android:exported="true"
+            android:writePermission="com.phonemetra.turbo.launcher.permission.WRITE_SETTINGS"
+            android:readPermission="com.phonemetra.turbo.launcher.permission.READ_SETTINGS" />
 
+        <meta-data android:name="android.nfc.disable_beam_default"
+                       android:value="true" />
+    </application>
 </manifest>
