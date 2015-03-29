@@ -146,5 +146,14 @@
                 <action android:name="android.intent.action.USER_INITIALIZE" />
             </intent-filter>
         </receiver>
+        
+        <receiver android:name="com.phonemetra.turbo.launcher..PackageChangedReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_CHANGED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"></data>
+            </intent-filter>
+        </receiver>    
 
 </manifest>
