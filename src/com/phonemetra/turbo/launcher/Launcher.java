@@ -96,4 +96,17 @@ public class Launcher extends Activity
 
             private static final Object sLock = new Object();
             private static int sScreen = DEFAULT_SCREEN;
+            
+            private HashMap<Integer, Integer> mItemIdToViewId = new HashMap<Integer, Integer>();
+            private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+            
+            // How long to wait before the new-shortcut animation automatically pans the workspace
+            private static int NEW_APPS_PAGE_MOVE_DELAY = 500;
+            private static int NEW_APPS_ANIMATION_INACTIVE_TIMEOUT_SECONDS = 5;
+            private static int NEW_APPS_ANIMATION_DELAY = 500;
+            
+            private final BroadcastReceiver mCloseSystemDialogsReceiver
+                    = new CloseSystemDialogsIntentReceiver();
+            private final ContentObserver mWidgetObserver = new AppWidgetResetObserver();                    
+
            
