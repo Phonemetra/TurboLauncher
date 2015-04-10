@@ -14,21 +14,9 @@
  * limitations under the License.
  */
 
-package com.phonemetra.turbo.launcher;
+package com.phonemetra.turbo.launcher.config;
 
-import android.app.Application;
+public class ProviderConfig {
 
-public class LauncherApplication extends Application {
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        LauncherAppState.setApplicationContext(this);
-        LauncherAppState.getInstance();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        LauncherAppState.getInstance().onTerminate();
-    }
+    public static final String AUTHORITY = "com.phonemetra.turbo.launcher.settings";
 }
