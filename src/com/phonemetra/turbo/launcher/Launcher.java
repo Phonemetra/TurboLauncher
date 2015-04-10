@@ -107,14 +107,6 @@ public class Launcher extends Activity
             
             private final BroadcastReceiver mCloseSystemDialogsReceiver
                     = new CloseSystemDialogsIntentReceiver();
-            private final ContentObserver mWidgetObserver = new AppWidgetResetObserver();
-            
-            private LayoutInflater mInflater;
-            
-            private Workspace mWorkspace;
-            private View mLauncherView;
-            private DragLayer mDragLayer;
-            private DragController mDragController;
-            private View mWeightWatcher;
+            private final ContentObserver mWidgetObserver = new AppWidgetResetObserver();                    
 
            
