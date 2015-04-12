@@ -159,7 +159,7 @@
         <!-- The settings provider contains Home's data, like the workspace favorites -->
         <provider
             android:name="com.phonemetra.turbo.launcher.LauncherProvider"
-            android:authorities="com.phonemetra.turbo.launcher.premium.settings"
+            android:authorities="com.phonemetra.turbo.launcher.settings"
             android:exported="true"
             android:writePermission="com.phonemetra.turbo.launcher.permission.WRITE_SETTINGS"
             android:readPermission="com.phonemetra.turbo.launcher.permission.READ_SETTINGS" />
