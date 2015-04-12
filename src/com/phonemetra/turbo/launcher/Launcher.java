@@ -1,3 +1,4 @@
+
 /*
 * Copyright (C) 2008 The Android Open Source Project
 *
@@ -13,18 +14,15 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
+
 package com.phonemetra.turbo.launcher;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
 
-import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
 
+
+/**
+* Default launcher application.
+*/
 public class Launcher extends Activity
               implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
                          View.OnTouchListener, PageSwitchListener, LauncherProviderChangeListener {
@@ -109,31 +107,6 @@ public class Launcher extends Activity
             
             private final BroadcastReceiver mCloseSystemDialogsReceiver
                     = new CloseSystemDialogsIntentReceiver();
-            private final ContentObserver mWidgetObserver = new AppWidgetResetObserver();
-            
-            private LayoutInflater mInflater;
-
-        	private Workspace mWorkspace;
-        	private View mLauncherView;
-        	private View mPageIndicators;
-        	private DragLayer mDragLayer;
-        	private DragController mDragController;
-        	
-        	private TransitionEffectsFragment mTransitionEffectsFragment;
-        	
-        	private AppWidgetManager mAppWidgetManager;
-        	private LauncherAppWidgetHost mAppWidgetHost;
-			
-        	private ItemInfo mPendingAddInfo = new ItemInfo();
-            private AppWidgetProviderInfo mPendingAddWidgetInfo;
-            private int mPendingAddWidgetId = -1;
-
-            private int[] mTmpAddItemCellCoordinates = new int[2];
-
-            private FolderInfo mFolderInfo;
-            
-            private Hotseat mHotseat;
-				
-			}
+            private final ContentObserver mWidgetObserver = new AppWidgetResetObserver();                    
 
            
