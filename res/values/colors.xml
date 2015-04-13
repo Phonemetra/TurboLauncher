@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/colors.xml
+**
+** Copyright 2008, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License.
+*/
+-->
+<resources>
+    <!-- The color tints to apply to the text and drag view when hovering
+         over the delete target or the info target -->
+    <color name="delete_target_hover_tint">#DAFF0000</color>
+    <color name="info_target_hover_tint">#DA0099CC</color>
+    <color name="edit_target_hover_tint">#DACCCC00</color>
+
+    <color name="bubble_dark_background">#20000000</color>
+    <color name="focused_background">#80c6c5c5</color>
+
+    <color name="appwidget_error_color">#FCCC</color>
+
+    <color name="workspace_all_apps_and_delete_zone_text_color">#CCFFFFFF</color>
+    <color name="workspace_all_apps_and_delete_zone_text_shadow_color">#A0000000</color>
+    <color name="workspace_icon_text_color">#FFF</color>
+
+    <color name="apps_customize_icon_text_color">#FFF</color>
+    <color name="folder_items_text_color">#FF333333</color>
+    <color name="folder_items_glow_color">#FFCCCCCC</color>
+    <color name="outline_color">#FFFFFFFF</color>
+
+    <color name="first_run_cling_circle_background_color">#64b1ea</color>
+   
+    <!-- A light Holo shade of blue -->
+    <color name="holo_blue_light">#ff33b5e5</color>
+    <!-- A light Holo shade of gray -->
+    <color name="holo_gray_light">#33999999</color>
+    <!-- A light Holo shade of green -->
+    <color name="holo_green_light">#ff99cc00</color>
+    <!-- A light Holo shade of red -->
+    <color name="holo_red_light">#ffff4444</color>
+    <!-- A dark Holo shade of blue -->
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <!-- A dark Holo shade of green -->
+    <color name="holo_green_dark">#ff669900</color>
+    <!-- A dark Holo shade of red -->
+    <color name="holo_red_dark">#ffcc0000</color>
+    <!-- A Holo shade of purple -->
+    <color name="holo_purple">#ffaa66cc</color>
+    <!-- A light Holo shade of orange -->
+    <color name="holo_orange_light">#ffffbb33</color>
+    <!-- A dark Holo shade of orange -->
+    <color name="holo_orange_dark">#ffff8800</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <!-- A really bright Holo shade of gray -->
+    <color name="holo_gray_bright">#33CCCCCC</color>
+    
+    <color name="listitem_selected">@color/holo_blue_light</color>
+   
+    <color name="settings_header_text">@color/holo_blue_light</color>
+    <color name="settings_bg_color">@color/holo_gray_light</color>
+    <color name="settings_bg_header_color">@color/holo_gray_light</color>
+    <color name="settings_bg_selected_color">@color/holo_blue_light</color>
+    <color name="settings_transition_selected_color">@color/holo_blue_bright</color>
+    
+</resources>
