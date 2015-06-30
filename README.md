@@ -1,2 +1,2 @@
 # TurboLauncher
-Turbo Launcher™
+Turbo Launcher®
