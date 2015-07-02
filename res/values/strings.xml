@@ -20,7 +20,7 @@
     <!-- Application name -->
     <string name="application_name" translatable="false">Turbo Launcher</string>
     <!-- Application title -->
-    <string name="application_title">Turbo Launcher™</string>
+    <string name="application_title">Turbo Launcher®</string>
     <!-- App version -->
     <string name="application_version" translatable="false">0.0.1</string>
     <!-- App copyright -->
