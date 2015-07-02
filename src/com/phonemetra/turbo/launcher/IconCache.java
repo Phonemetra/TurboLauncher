@@ -29,8 +29,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,8 +46,6 @@ import com.phonemetra.turbo.launcher.settings.SettingsProvider;
  * Cache of application icons. Icons can be made from any thread.
  */
 public class IconCache {
-
-	private static final String TAG = "Launcher.IconCache";
 
 	private static final int INITIAL_ICON_CACHE_CAPACITY = 50;
 	private static final String RESOURCE_FILE_PREFIX = "icon_";
@@ -385,19 +381,19 @@ public class IconCache {
 				byte[] buffer = os.toByteArray();
 				resourceFile.write(buffer, 0, buffer.length);
 			} else {
-				Log.w(TAG, "failed to encode cache for " + key);
+
 				return;
 			}
 		} catch (FileNotFoundException e) {
-			Log.w(TAG, "failed to pre-load cache for " + key, e);
+
 		} catch (IOException e) {
-			Log.w(TAG, "failed to pre-load cache for " + key, e);
+
 		} finally {
 			if (resourceFile != null) {
 				try {
 					resourceFile.close();
 				} catch (IOException e) {
-					Log.d(TAG, "failed to save restored icon for: " + key, e);
+
 				}
 			}
 		}
@@ -429,18 +425,18 @@ public class IconCache {
 			icon = BitmapFactory.decodeByteArray(bytes.toByteArray(), 0,
 					bytes.size());
 			if (icon == null) {
-				Log.w(TAG, "failed to decode pre-load icon for " + key);
+
 			}
 		} catch (FileNotFoundException e) {
 
 		} catch (IOException e) {
-			Log.w(TAG, "failed to read pre-load icon for: " + key, e);
+
 		} finally {
 			if (resourceFile != null) {
 				try {
 					resourceFile.close();
 				} catch (IOException e) {
-					Log.d(TAG, "failed to manage pre-load icon file: " + key, e);
+
 				}
 			}
 		}
