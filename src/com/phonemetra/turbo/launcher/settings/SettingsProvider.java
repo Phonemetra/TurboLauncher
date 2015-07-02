@@ -25,7 +25,8 @@ public final class SettingsProvider {
 
     public static final String SETTINGS_HOME_LAST_APP = "home_last_app";
     
-  
+    public static final String SETTINGS_UI_THEME_ICONS = "ui_theme_icons";
+    public static final String SETTINGS_UI_THEME_PACKAGENAME = "ui_theme_packagename";
     
     public static SharedPreferences get(Context context) {
         return context.getSharedPreferences(SETTINGS_KEY, Context.MODE_MULTI_PROCESS);
@@ -71,5 +72,33 @@ public final class SettingsProvider {
         get(context).edit().putInt(key, value).commit();
     }
     
-   
+    public static boolean getThemeIcons(Context context) {
+		SharedPreferences preferences = context.getSharedPreferences(
+				SETTINGS_KEY, 0);
+		return preferences.getBoolean("themeIcons", true);
+
+	}
+    
+    public static boolean getThemeFont(Context context) {
+		SharedPreferences sp = context.getSharedPreferences(
+				SETTINGS_KEY, 0);
+		boolean newD = sp.getBoolean("themeFont", true);
+		return newD;
+	}
+    
+    public static String getThemePackageName(Context context,
+			String default_theme) {
+		SharedPreferences preferences = context.getSharedPreferences(
+				SETTINGS_KEY, 0);
+		return preferences.getString("themePackageName", default_theme);
+	}
+
+	public static void setThemePackageName(Context context,
+			String packageName) {
+		final SharedPreferences preferences = context.getSharedPreferences(
+				SETTINGS_KEY, 0);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString("themePackageName", packageName);
+		editor.commit();
+	}
 }

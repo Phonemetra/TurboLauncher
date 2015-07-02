@@ -124,7 +124,7 @@ public final class Utilities {
      * Returns a bitmap suitable for the all apps view.
      */
     public static Bitmap createIconBitmap(Drawable icon, Context context) {
-        synchronized (sCanvas) { 
+        synchronized (sCanvas) { // we share the statics :-(
             if (sIconWidth == -1) {
                 initStatics(context);
             }
@@ -167,7 +167,18 @@ public final class Utilities {
 
             final int left = (textureWidth-width) / 2;
             final int top = (textureHeight-height) / 2;
-  
+
+            @SuppressWarnings("all") // suppress dead code warning
+            final boolean debug = false;
+            if (debug) {
+                // draw a big box for the icon for debugging
+                canvas.drawColor(sColors[sColorIndex]);
+                if (++sColorIndex >= sColors.length) sColorIndex = 0;
+                Paint debugPaint = new Paint();
+                debugPaint.setColor(0xffcccc00);
+                canvas.drawRect(left, top, left+width, top+height, debugPaint);
+            }
+
             sOldBounds.set(icon.getBounds());
             icon.setBounds(left, top, left+width, top+height);
             icon.draw(canvas);
@@ -188,7 +199,7 @@ public final class Utilities {
      *         thumbnail could not be created.
      */
     static Bitmap resampleIconBitmap(Bitmap bitmap, Context context) {
-        synchronized (sCanvas) { 
+        synchronized (sCanvas) { // we share the statics :-(
             if (sIconWidth == -1) {
                 initStatics(context);
             }

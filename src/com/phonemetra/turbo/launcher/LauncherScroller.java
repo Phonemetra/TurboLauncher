@@ -25,10 +25,6 @@ import android.view.ViewConfiguration;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 
-/**
- * This class differs from the framework {@link android.widget.Scroller} in that
- * you can modify the Interpolator post-construction.
- */
 public class LauncherScroller  {
     private int mMode;
 

@@ -22,8 +22,6 @@ public class Alarm implements Runnable{
    
     private long mAlarmTriggerTime;
 
-    // if we've scheduled a call to run() (ie called mHandler.postDelayed), this variable is true.
-    // We use this to avoid having multiple pending callbacks
     private boolean mWaitingForCallback;
 
     private Handler mHandler;

@@ -21,6 +21,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.view.View;
 
+/**
+ * A convenience class for two-way animations, e.g. a fadeIn/fadeOut animation.
+ * With a regular ValueAnimator, if you call reverse to show the 'out' animation, you'll get
+ * a frame-by-frame mirror of the 'in' animation -- i.e., the interpolated values will
+ * be exactly reversed. Using this class, both the 'in' and the 'out' animation use the
+ * interpolator in the same direction.
+ */
 public class InterruptibleInOutAnimator {
     private long mOriginalDuration;
     private float mOriginalFromValue;
@@ -35,6 +42,7 @@ public class InterruptibleInOutAnimator {
     private static final int IN = 1;
     private static final int OUT = 2;
 
+    // TODO: This isn't really necessary, but is here to help diagnose a bug in the drag viz
     private int mDirection = STOPPED;
 
     public InterruptibleInOutAnimator(View view, long duration, float fromValue, float toValue) {
@@ -57,11 +65,14 @@ public class InterruptibleInOutAnimator {
         final float startValue = mFirstRun ? mOriginalFromValue :
                 ((Float) mAnimator.getAnimatedValue()).floatValue();
 
-       
+        // Make sure it's stopped before we modify any values
         cancel();
 
+        // TODO: We don't really need to do the animation if startValue == toValue, but
+        // somehow that doesn't seem to work, possibly a quirk of the animation framework
         mDirection = direction;
 
+        // Ensure we don't calculate a non-sensical duration
         long duration = mOriginalDuration - currentPlayTime;
         mAnimator.setDuration(Math.max(0, Math.min(duration, mOriginalDuration)));
 
@@ -80,7 +91,9 @@ public class InterruptibleInOutAnimator {
         mDirection = STOPPED;
     }
 
-    
+    /**
+     * Return true when the animation is not running and it hasn't even been started.
+     */
     public boolean isStopped() {
         return mDirection == STOPPED;
     }

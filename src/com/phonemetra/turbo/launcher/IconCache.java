@@ -44,7 +44,12 @@ import java.util.Map.Entry;
 
 import com.phonemetra.turbo.launcher.settings.SettingsProvider;
 
+/**
+ * Cache of application icons. Icons can be made from any thread.
+ */
 public class IconCache {
+
+	private static final String TAG = "Launcher.IconCache";
 
 	private static final int INITIAL_ICON_CACHE_CAPACITY = 50;
 	private static final String RESOURCE_FILE_PREFIX = "icon_";
@@ -202,7 +207,55 @@ public class IconCache {
 		}
 	}
 
-	
+	public Bitmap getThemeIcon(ResolveInfo info) {
+
+		String themePackage = SettingsProvider.getThemePackageName(mContext,
+				Launcher.THEME_DEFAULT);
+		Drawable icon = null;
+		Bitmap iconBitmap = null;
+
+		if (themePackage.equals(Launcher.THEME_DEFAULT)) {
+			// iconBitmap =
+			// Utilities.createIconBitmap(info.activityInfo.loadIcon(mPackageManager),
+			// mContext);
+			iconBitmap = Utilities.createIconBitmap(getFullResIcon(info),
+					mContext);
+		} else {
+			Resources themeResources = null;
+			if (SettingsProvider.getThemeIcons(mContext)) {
+
+				String label = info.activityInfo.loadLabel(mPackageManager)
+						.toString();
+				if (label != null) {
+					info.activityInfo.name = (String) label.toLowerCase()
+							.replace(".", "_");
+				}
+
+				try {
+					themeResources = mPackageManager
+							.getResourcesForApplication(themePackage);
+				} catch (PackageManager.NameNotFoundException e) {
+					e.printStackTrace();
+				}
+
+				if (themeResources != null) {
+					int resource_id = themeResources.getIdentifier(
+							info.activityInfo.name, "drawable", themePackage);
+					if (resource_id != 0) {
+						icon = themeResources.getDrawable(resource_id);
+					}
+				}
+			}
+			if (icon == null) {
+				iconBitmap = Utilities.createIconBitmap(
+						info.activityInfo.loadIcon(mPackageManager), mContext);
+			} else {
+				iconBitmap = Utilities.createIconBitmap(icon, mContext);
+			}
+		}
+
+		return iconBitmap;
+	}
 
 	public Bitmap getIcon(Intent intent) {
 		return getIcon(intent, null);
@@ -265,9 +318,9 @@ public class IconCache {
 					entry.title = info.activityInfo.name;
 				}
 
-				 entry.icon = Utilities.createIconBitmap(getFullResIcon(info),
-				 mContext);
-				
+				// entry.icon = Utilities.createIconBitmap(getFullResIcon(info),
+				// mContext);
+				entry.icon = getThemeIcon(info);
 			} else {
 				entry.title = "";
 				Bitmap preloaded = getPreloadedIcon(componentName);
@@ -332,18 +385,19 @@ public class IconCache {
 				byte[] buffer = os.toByteArray();
 				resourceFile.write(buffer, 0, buffer.length);
 			} else {
+				Log.w(TAG, "failed to encode cache for " + key);
 				return;
 			}
 		} catch (FileNotFoundException e) {
-
+			Log.w(TAG, "failed to pre-load cache for " + key, e);
 		} catch (IOException e) {
-
+			Log.w(TAG, "failed to pre-load cache for " + key, e);
 		} finally {
 			if (resourceFile != null) {
 				try {
 					resourceFile.close();
 				} catch (IOException e) {
-
+					Log.d(TAG, "failed to save restored icon for: " + key, e);
 				}
 			}
 		}
@@ -374,17 +428,19 @@ public class IconCache {
 
 			icon = BitmapFactory.decodeByteArray(bytes.toByteArray(), 0,
 					bytes.size());
-
+			if (icon == null) {
+				Log.w(TAG, "failed to decode pre-load icon for " + key);
+			}
 		} catch (FileNotFoundException e) {
 
 		} catch (IOException e) {
-
+			Log.w(TAG, "failed to read pre-load icon for: " + key, e);
 		} finally {
 			if (resourceFile != null) {
 				try {
 					resourceFile.close();
 				} catch (IOException e) {
-
+					Log.d(TAG, "failed to manage pre-load icon file: " + key, e);
 				}
 			}
 		}
@@ -405,6 +461,13 @@ public class IconCache {
 		return icon;
 	}
 
+	/**
+	 * Remove a pre-loaded icon from the persistent icon cache.
+	 * 
+	 * @param componentName
+	 *            the component that should own the icon
+	 * @returns true on success
+	 */
 	public boolean deletePreloadedIcon(ComponentName componentName) {
 		if (componentName == null) {
 			return false;

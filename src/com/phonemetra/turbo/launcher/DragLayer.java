@@ -173,7 +173,7 @@ public class DragLayer extends FrameLayout implements ViewGroup.OnHierarchyChang
         }
 
         Folder currentFolder = mLauncher.getWorkspace().getOpenFolder();
-        if (currentFolder != null && !mLauncher.getLauncherClings().isFolderClingVisible() &&
+        if (currentFolder != null &&
                 intercept) {
             if (currentFolder.isEditingName()) {
                 if (!isEventOverFolderTextRegion(currentFolder, ev)) {

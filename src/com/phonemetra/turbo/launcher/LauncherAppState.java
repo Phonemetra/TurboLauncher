@@ -22,7 +22,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.os.Handler;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
@@ -33,7 +32,6 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
     private static final String SHARED_PREFERENCES_KEY = "com.phonemetra.turbo.launcher.prefs";
 
     private final AppFilter mAppFilter;
-    private final BuildInfo mBuildInfo;
     private LauncherModel mModel;
     private IconCache mIconCache;
     private WidgetPreviewLoader.CacheDb mWidgetPreviewCacheDb;
@@ -80,7 +78,6 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         mIconCache = new IconCache(sContext);
 
         mAppFilter = AppFilter.loadByName(sContext.getString(R.string.app_filter_class));
-        mBuildInfo = BuildInfo.loadByName(sContext.getString(R.string.build_info_class));
         mModel = new LauncherModel(this, mIconCache, mAppFilter);
 
         // Register intent receivers
@@ -198,6 +195,7 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
         return mIsScreenLarge;
     }
 
+    // Need a version that doesn't require an instance of LauncherAppState for the wallpaper picker
     public static boolean isScreenLarge(Resources res) {
         return res.getBoolean(R.bool.is_large_tablet);
     }

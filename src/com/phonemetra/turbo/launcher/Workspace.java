@@ -73,6 +73,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
+/**
+ * The workspace is a wide area with a wallpaper and a finite number of pages.
+ * Each page contains a number of icons, folders or widgets the user can
+ * interact with. A workspace is meant to be used with a fixed width only.
+ */
 public class Workspace extends SmoothPagedView
         implements DropTarget, DragSource, DragScroller, View.OnTouchListener,
         DragController.DragListener, LauncherTransitionable, ViewGroup.OnHierarchyChangeListener,
@@ -612,8 +617,6 @@ public class Workspace extends SmoothPagedView
 
         addFullScreenPage(customScreen);
 
-        // Update the custom content hint
-        mLauncher.getLauncherClings().updateCustomContentHintVisibility();
         if (mRestorePage != INVALID_RESTORE_PAGE) {
             mRestorePage = mRestorePage + 1;
         } else {
@@ -638,8 +641,6 @@ public class Workspace extends SmoothPagedView
 
         mCustomContentCallbacks = null;
 
-        // Update the custom content hint
-        mLauncher.getLauncherClings().updateCustomContentHintVisibility();
         if (mRestorePage != INVALID_RESTORE_PAGE) {
             mRestorePage = mRestorePage - 1;
         } else {
@@ -2759,10 +2760,7 @@ public class Workspace extends SmoothPagedView
         if (child instanceof BubbleTextView) {
             BubbleTextView icon = (BubbleTextView) child;
             icon.clearPressedOrFocusedBackground();
-        } else if (child instanceof FolderIcon) {
-            // Dismiss the folder cling if we haven't already
-            mLauncher.getLauncherClings().markFolderClingDismissed();
-        }
+        } 
 
         if (child.getTag() == null || !(child.getTag() instanceof ItemInfo)) {
             String msg = "Drag started with a view that has no tag set. This "

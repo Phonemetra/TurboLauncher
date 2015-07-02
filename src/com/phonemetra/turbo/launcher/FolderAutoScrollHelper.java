@@ -19,6 +19,10 @@ package com.phonemetra.turbo.launcher;
 import android.support.v4.widget.AutoScrollHelper;
 import android.widget.ScrollView;
 
+/**
+ * An implementation of {@link AutoScrollHelper} that knows how to scroll
+ * through a {@link Folder}.
+ */
 public class FolderAutoScrollHelper extends AutoScrollHelper {
     private static final float MAX_SCROLL_VELOCITY = 1500f;
 

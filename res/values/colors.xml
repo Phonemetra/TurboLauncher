@@ -22,10 +22,8 @@
          over the delete target or the info target -->
     <color name="delete_target_hover_tint">#DAFF0000</color>
     <color name="info_target_hover_tint">#DA0099CC</color>
-    <color name="edit_target_hover_tint">#DACCCC00</color>
 
     <color name="bubble_dark_background">#20000000</color>
-    <color name="focused_background">#80c6c5c5</color>
 
     <color name="appwidget_error_color">#FCCC</color>
 
@@ -38,8 +36,6 @@
     <color name="folder_items_glow_color">#FFCCCCCC</color>
     <color name="outline_color">#FFFFFFFF</color>
 
-    <color name="first_run_cling_circle_background_color">#64b1ea</color>
-   
     <!-- A light Holo shade of blue -->
     <color name="holo_blue_light">#ff33b5e5</color>
     <!-- A light Holo shade of gray -->
@@ -73,4 +69,5 @@
     <color name="settings_bg_selected_color">@color/holo_blue_light</color>
     <color name="settings_transition_selected_color">@color/holo_blue_bright</color>
     
+    <color name="wallpaper_picker_translucent_gray">#66000000</color>
 </resources>

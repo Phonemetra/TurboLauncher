@@ -5,7 +5,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-# http://www.apache.org/licenses/LICENSE-2.0
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 LOCAL_PATH := $(call my-dir)
 
 #
@@ -25,22 +26,20 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_STATIC_JAVA_LIBRARIES := android-support-v13
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src) \
-		$(call all-renderscript-files-under, src) \
-		$(call all-proto-files-under, protos)
-		
+    $(call all-renderscript-files-under, src) \
+    $(call all-proto-files-under, protos)
+
 LOCAL_PROTOC_OPTIMIZE_TYPE := nano
 LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)/protos/
 
-# LOCAL_SDK_VERSION := 21
+LOCAL_SDK_VERSION := 22
 
-LOCAL_PACKAGE_NAME := Turbo
-LOCAL_PRIVILEGED_MODULE := true
+LOCAL_PACKAGE_NAME := Turbo Launcher
 #LOCAL_CERTIFICATE := shared
 
 LOCAL_OVERRIDES_PACKAGES := Launcher3
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags
-LOCAL_PROGUARD_ENABLED := disabled
 
 include $(BUILD_PACKAGE)
 
@@ -58,28 +57,6 @@ LOCAL_PROTOC_OPTIMIZE_TYPE := nano
 LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)/protos/
 
 LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := launcher_protoutil_lib
-LOCAL_IS_HOST_MODULE := true
-LOCAL_JAR_MANIFEST := util/etc/manifest.txt
-LOCAL_STATIC_JAVA_LIBRARIES := host-libprotobuf-java-2.3.0-nano
+LOCAL_MODULE := protoutil
 
 include $(BUILD_HOST_JAVA_LIBRARY)
-
-#
-# Protocol Buffer Debug Utility Wrapper Script
-#
-include $(CLEAR_VARS)
-LOCAL_IS_HOST_MODULE := true
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := launcher_protoutil
-
-include $(BUILD_SYSTEM)/base_rules.mk
-
-$(LOCAL_BUILT_MODULE): launcher_protoutil_lib
-$(LOCAL_BUILT_MODULE): $(LOCAL_PATH)/util/etc/launcher_protoutil | $(ACP)
-@echo "Copy: $(PRIVATE_MODULE) ($@)"
-$(copy-file-to-new-target)
-$(hide) chmod 755 $@
-
-INTERNAL_DALVIK_MODULES += $(LOCAL_INSTALLED_MODULE)

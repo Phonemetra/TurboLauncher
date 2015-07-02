@@ -46,6 +46,9 @@ import com.phonemetra.turbo.launcher.R;
 
 import java.util.ArrayList;
 
+/**
+ * An icon that can appear on in the workspace representing an {@link UserFolder}.
+ */
 public class FolderIcon extends FrameLayout implements FolderListener {
     private Launcher mLauncher;
     private Folder mFolder;
@@ -133,7 +136,13 @@ public class FolderIcon extends FrameLayout implements FolderListener {
 
     static FolderIcon fromXml(int resId, Launcher launcher, ViewGroup group,
             FolderInfo folderInfo, IconCache iconCache) {
-        
+        @SuppressWarnings("all") // suppress dead code warning
+        final boolean error = INITIAL_ITEM_ANIMATION_DURATION >= DROP_IN_ANIMATION_DURATION;
+        if (error) {
+            throw new IllegalStateException("DROP_IN_ANIMATION_DURATION must be greater than " +
+                    "INITIAL_ITEM_ANIMATION_DURATION, as sequencing of adding first two items " +
+                    "is dependent on this");
+        }
         LauncherAppState app = LauncherAppState.getInstance();
         DeviceProfile grid = app.getDynamicGrid().getDeviceProfile();
 

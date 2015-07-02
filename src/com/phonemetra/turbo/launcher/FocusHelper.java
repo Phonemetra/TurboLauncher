@@ -20,7 +20,11 @@ import android.content.res.Configuration;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ScrollView;
+import android.widget.TabHost;
+import android.widget.TabWidget;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

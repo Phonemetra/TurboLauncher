@@ -25,6 +25,7 @@
     <string name="application_version" translatable="false">0.0.1</string>
     <!-- App copyright -->
     <string name="application_copyright">Copyright \u00A9 2015 Phonemetra</string>
+    <!-- Accessibility-facing application name -->
     <string name="home">Home</string>
     <!-- Name for all applications running as this uid. -->
     <string name="uid_name">Android Core Apps</string>
@@ -128,12 +129,6 @@
     <!-- Label for the info icon. [CHAR_LIMIT=30] -->
     <string name="info_target_label">App info</string>
 
-    <!-- Label for cancel drop target. [CHAR_LIMIT=30] -->
-    <string name="cancel_target_label">Cancel</string>
-
-    <!-- Label for the info icon. [CHAR_LIMIT=30] -->
-    <string name="edit_target_label">Edit</string>
-
     <!-- Accessibility: Search button -->
     <string name="accessibility_search_button">Search</string>
     <!-- Accessibility: Voice Search button -->
@@ -217,38 +212,6 @@
     <!-- The format string for AppsCustomize Apps page scroll text [CHAR_LIMIT=none] -->
     <string name="apps_customize_widgets_scroll_format">Widgets page %1$d of %2$d</string>
 
-    <!-- Clings -->
-    <!-- The title text for the workspace cling [CHAR_LIMIT=30] -->
-    <string name="first_run_cling_title">Welcome</string>
-    <!-- The description of how to use the workspace [CHAR_LIMIT=60] -->
-    <string name="first_run_cling_description">Make yourself at home.</string>
-    <!-- The description of how to use the workspace [CHAR_LIMIT=60] -->
-    <string name="first_run_cling_custom_content_hint"></string>
-    <!-- The description of how to use the workspace [CHAR_LIMIT=60] -->
-    <string name="first_run_cling_search_bar_hint"></string>
-    <!-- The description of how to use the workspace [CHAR_LIMIT=60] -->
-    <string name="first_run_cling_create_screens_hint">Create more screens for apps and folders</string>
-    <!-- The title text for the migration cling [CHAR_LIMIT=30] -->
-    <string name="migration_cling_title">Copy your app icons</string>
-    <!-- The description of what migration does [CHAR_LIMIT=70] -->
-    <string name="migration_cling_description">Import icons and folders from your old Home screens?</string>
-    <!-- The description of the button to migrate apps from another launcher [CHAR_LIMIT=30] -->
-    <string name="migration_cling_copy_apps">COPY ICONS</string>
-    <!-- The description of the button to use the default launcher layout [CHAR_LIMIT=30] -->
-    <string name="migration_cling_use_default">START FRESH</string>
-    <!-- The title text for the workspace cling [CHAR_LIMIT=30] -->
-    <string name="workspace_cling_title">Organize your space</string>
-    <!-- The description of how to use the workspace [CHAR_LIMIT=70] -->
-    <string name="workspace_cling_move_item">Touch &amp; hold background to manage wallpaper, widgets and settings.</string>
-    <!-- The title text for the Folder cling [CHAR_LIMIT=30] -->
-    <string name="folder_cling_title">Here\'s a folder</string>
-    <!-- The description of how to create a folder [CHAR_LIMIT=70] -->
-    <string name="folder_cling_create_folder">To create one like this, touch &amp; hold an app, then move it over another.</string>
-    <!-- The text on the button to dismiss a cling [CHAR_LIMIT=30] -->
-    <string name="cling_dismiss">OK</string>
-    <!-- Error message on dummy custom cling layout [DO NOT TRANSLATE] -->
-    <string name="dummy_custom_cling_error_message">Error: custom workspace layout passed in but custom cling was not overwritten</string>
-
     <add-resource name="default_folder_name" type="string" />
 
     <!-- Folder accessibility -->
@@ -311,6 +274,7 @@
     <string name="drawer_settings">DRAWER</string>
     <string name="app_settings">GENERAL</string>
     <string name="dock_settings">DOCK</string>
+    <string name="build_settings">BUILD</string>
 
     <!-- Settings states -->
     <string name="setting_state_on">ON</string>
@@ -344,8 +308,62 @@
 
     <!-- Larger icons -->
     <string name="larger_icons_text">Larger icons</string>
-
+    
     <!-- Hide icon labels -->
     <string name="hide_icon_labels">Hide icon labels</string>
+
+    <!-- Protected apps -->
+    <string name="protected_app_settings">Protected apps</string>
+
+    <!-- Button label on Wallpaper picker screen; user selects this button to set a specific wallpaper -->
+    <string name="wallpaper_instructions">Set wallpaper</string>
+    <!--
+         Error message when an image is selected as a wallpaper,
+         but the wallpaper picker cannot load it
+    -->
+    <string name="image_load_fail">Coudn\'t load image</string>
+    <!--
+         Error message when an image is selected as a wallpaper,
+         but the wallpaper cropper cannot load it. The user will
+         usually see this when using another app and trying to set
+         an image as the wallpaper
+    -->
+    <string name="wallpaper_load_fail">Couldn\'t load image as wallpaper</string>
+    <!-- Shown when wallpapers are selected in Wallpaper picker -->
+    <!--
+         String indicating how many media item(s) is(are) selected
+            eg. 1 selected [CHAR LIMIT=30]
+    -->
+    <plurals name="number_of_items_selected">
+        <item quantity="zero">%1$d selected</item>
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+    <!--
+         Accessibility string used as a label for a particular wallpaper in the Wallpaper Picker list.
+         e.g. "Wallpaper 3 of 10"
+    -->
+    <string name="wallpaper_accessibility_name">Wallpaper %1$d of %2$d</string>
+    <!-- Accessibility string used to announce that a wallpaper has been selected. -->
+    <string name="announce_selection">Selected <xliff:g id="label" example="Wallpaper 3 of 10">%1$s</xliff:g></string>
+    <string name="wallpaper_delete">Delete</string>
+    <string name="pick_image">Pick image</string>
+    <string name="pick_wallpaper">Wallpapers</string>
+    <string name="crop_wallpaper">Crop wallpaper</string>
+    <string name="group_wallpapers">Wallpapers</string>
+    
+    
+    <string name="pref_title_theme_settings">Themes</string>
+    <string name="pref_summary_theme_settings">Select themes for Turbo Launcher</string>
+    <string name="pref_title_theme_package">Select your theme</string>
+    <string name="pref_summary_theme_package">Choose your theme for Turbo Launcher</string>
+    <string name="pref_title_theme_preview">Theme Preview</string>
+    <string name="pref_summary_theme_preview">Preview of the selected theme</string>
+    <string name="pref_title_theme_icons">Use Theme Icons</string>
+    <string name="pref_summary_theme_icons">Deselect this to use default icons</string>
+    <string name="pref_title_theme_font">Use Theme Font</string>
+    <string name="pref_summary_theme_font">Deselect this to use default font</string>
+    <string name="pref_themes_apply_theme">Apply theme!</string>
+    <string name="pref_themes_get_themes">Get themes!</string>
 
 </resources>

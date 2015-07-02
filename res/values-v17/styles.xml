@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PagedViewWidgetImageView">
+        <item name="android:paddingLeft">@dimen/app_widget_preview_padding_left</item>
+    </style>
+    <style name="SearchButton.WithPaddingStart">
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+</resources>

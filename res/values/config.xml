@@ -1,5 +1,12 @@
 <resources>
 
+    <bool name="config_largeHeap">false</bool>
+    <bool name="is_tablet">false</bool>
+    <bool name="is_large_tablet">false</bool>
+    <bool name="allow_rotation">false</bool>
+    <bool name="config_largeIcons">false</bool>
+     
+
     <!-- Dynamic Grid -->
     <integer name="config_dynamic_grid_max_long_edge_cell_count">6</integer>
     <integer name="config_dynamic_grid_max_short_edge_cell_count">5</integer>
@@ -8,14 +15,6 @@
     <integer name="config_dynamic_grid_overview_icon_zone_percentage">20</integer>
     <!-- Out of 100, the percent to shrink the workspace during overview mode. -->
     <integer name="config_dynamic_grid_overview_scale_percentage">80</integer>
-
-    <!-- Miscellaneous -->
-    <bool name="config_largeHeap">false</bool>
-    <bool name="is_tablet">false</bool>
-    <bool name="is_large_tablet">false</bool>
-    <bool name="allow_rotation">false</bool>
-    <bool name="config_largeIcons">false</bool>
-    <bool name="config_turboBoost">true</bool>
 
     <!-- Max number of page indicators to show -->
     <integer name="config_maxNumberOfPageIndicatorsToShow">21</integer>
@@ -98,9 +97,6 @@
     <!-- Camera distance for the overscroll effect -->
     <integer name="config_cameraDistance">8000</integer>
 
-    <!-- Whether or not to use custom clings if a custom workspace layout is passed in -->
-    <bool name="config_useCustomClings">false</bool>
-
     <!-- Hotseat -->
     <bool name="hotseat_transpose_layout_with_orientation">true</bool>
 
@@ -109,12 +105,6 @@
          filter the activities shown in the launcher. Can be empty.
     -->
     <string name="app_filter_class" translatable="false"></string>
-
-    <!--
-         Name of a subclass of com.phonemetra.turbo.launcher.BuildInfo used to
-         get build information. Can be empty.
-    -->
-    <string name="build_info_class" translatable="false"></string>
 
     <bool name="center_crop">false</bool>
 

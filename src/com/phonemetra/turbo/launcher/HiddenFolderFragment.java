@@ -6,24 +6,30 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.media.Image;
 import android.text.InputType;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
+import com.phonemetra.turbo.launcher.settings.SettingsProvider;
+import com.phonemetra.turbo.launcher.R;
+
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
-import com.phonemetra.turbo.launcher.R;
 
 public class HiddenFolderFragment extends Fragment {
     public static final String HIDDEN_FOLDER_FRAGMENT = "hiddenFolderFragment";
@@ -282,7 +288,7 @@ public class HiddenFolderFragment extends Fragment {
                         mIcons.put(app.componentName.getPackageName(), icon);
                         publishProgress();
                     } catch (PackageManager.NameNotFoundException e) {
-                       
+                        // ignored; app will show up with default image
                     }
                 }
 

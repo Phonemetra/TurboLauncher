@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.phonemetra.turbo.launcher" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="themeIcons"
+        android:summary="@string/pref_summary_theme_icons"
+        android:title="@string/pref_title_theme_icons" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="themeFont"
+        android:summary="@string/pref_summary_theme_font"
+        android:title="@string/pref_title_theme_font" />
+
+    <ListPreference
+        android:key="themePackageName"
+        android:summary="@string/pref_summary_theme_package"
+        android:title="@string/pref_title_theme_package" />
+
+    <com.phonemetra.turbo.launcher.ThemePreference
+        android:key="themePreview"
+        android:layout="@layout/theme_preview" />
+
+</PreferenceScreen>

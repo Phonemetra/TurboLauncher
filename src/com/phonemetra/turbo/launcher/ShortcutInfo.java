@@ -37,14 +37,6 @@ class ShortcutInfo extends ItemInfo {
      * The intent used to start the application.
      */
     Intent intent;
-    
-    String customIconResource;
-    
-    /**
-     * Indicates whether the title comes from an application's resource (if false)
-     * or from a custom title (if true.)
-     */
-    boolean customTitle;
 
     /**
      * Indicates whether the icon comes from an application's resource (if false)
@@ -68,12 +60,6 @@ class ShortcutInfo extends ItemInfo {
      * The application icon.
      */
     private Bitmap mIcon;
-    
-    /**
-     * Title change listener
-     */
-    private ArrayList<ShortcutListener> mListeners =
-            new ArrayList<ShortcutListener>();
 
     long firstInstallTime;
     int flags = 0;
@@ -157,9 +143,6 @@ class ShortcutInfo extends ItemInfo {
 
     public void setIcon(Bitmap b) {
         mIcon = b;
-        for (ShortcutListener i : mListeners) {
-            i.onIconChanged(this);
-        }
     }
 
     public Bitmap getIcon(IconCache iconCache) {
@@ -189,20 +172,6 @@ class ShortcutInfo extends ItemInfo {
         itemType = LauncherSettings.BaseLauncherColumns.ITEM_TYPE_APPLICATION;
         initFlagsAndFirstInstallTime(
                 getPackageInfo(context, intent.getComponent().getPackageName()));
-    }
-    
-    public void setTitle(CharSequence title) {
-        this.title = title;
-        this.customTitle = true;
-        for (ShortcutListener i : mListeners) {
-            i.onTitleChanged(this);
-        }
-    }
-    
-    void setListener(ShortcutListener listener) {
-        if (!mListeners.contains(listener) && listener != null) {
-            mListeners.add(listener);
-        }
     }
 
     @Override
@@ -249,11 +218,6 @@ class ShortcutInfo extends ItemInfo {
             Log.d(tag, "   title=\"" + info.title + " icon=" + info.mIcon
                     + " customIcon=" + info.customIcon);
         }
-    }
-    
-    interface ShortcutListener {
-        public void onTitleChanged(ShortcutInfo item);
-        public void onIconChanged(ShortcutInfo item);
     }
 }
 

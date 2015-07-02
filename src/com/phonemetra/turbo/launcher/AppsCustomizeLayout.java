@@ -16,6 +16,8 @@
 
 package com.phonemetra.turbo.launcher;
 
+import com.phonemetra.turbo.launcher.R;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -25,8 +27,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-
-import com.phonemetra.turbo.launcher.R;
 
 public class AppsCustomizeLayout extends FrameLayout implements LauncherTransitionable,
         Insettable  {
@@ -68,13 +68,7 @@ public class AppsCustomizeLayout extends FrameLayout implements LauncherTransiti
         mAppsCustomizePane = appsCustomizePane;
         mContent = (FrameLayout) findViewById(R.id.apps_customize_content);
         if (mAppsCustomizePane == null) throw new Resources.NotFoundException();
-
-        /*findViewById(R.id.page_indicator).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAppsCustomizePane.enterOverviewMode();
-            }
-        });*/
+        
     }
 
      public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -176,8 +170,6 @@ public class AppsCustomizeLayout extends FrameLayout implements LauncherTransiti
             enableAndBuildHardwareLayer();
         }
 
-        // Dismiss the workspace cling
-        l.getLauncherClings().dismissWorkspaceCling(null);
     }
 
     @Override
@@ -194,15 +186,10 @@ public class AppsCustomizeLayout extends FrameLayout implements LauncherTransiti
         }
 
         if (!toWorkspace) {
-            // Show the all apps cling (if not already shown)
-            mAppsCustomizePane.showAllAppsCling();
+           
             // Make sure adjacent pages are loaded (we wait until after the transition to
             // prevent slowing down the animation)
             mAppsCustomizePane.loadAssociatedPages(mAppsCustomizePane.getCurrentPage());
-
-            // Going from Workspace -> All Apps
-            // NOTE: We should do this at the end since we check visibility state in some of the
-            // cling initialization/dismiss code above.
             setVisibilityOfSiblingsWithLowerZOrder(INVISIBLE);
         }
     }

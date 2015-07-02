@@ -51,7 +51,7 @@ public class InfoDropTarget extends ButtonDropTarget {
         Resources r = getResources();
         mHoverColor = r.getColor(R.color.info_target_hover_tint);
         mDrawable = (TransitionDrawable) getCurrentDrawable();
-        if (mDrawable != null) {
+        if (null != mDrawable) {
             mDrawable.setCrossFadeEnabled(true);
         }
 
@@ -100,9 +100,7 @@ public class InfoDropTarget extends ButtonDropTarget {
         boolean isVisible = dragItemComponentName(info) != null;
 
         mActive = isVisible;
-        if (mDrawable != null) {
-        	mDrawable.resetTransition();
-        }
+        mDrawable.resetTransition();
         setTextColor(mOriginalTextColor);
         ((ViewGroup) getParent()).setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
@@ -115,9 +113,8 @@ public class InfoDropTarget extends ButtonDropTarget {
 
     public void onDragEnter(DragObject d) {
         super.onDragEnter(d);
-        if (mDrawable != null) {
-        	mDrawable.startTransition(mTransitionDuration);
-        }	
+
+        mDrawable.startTransition(mTransitionDuration);
         setTextColor(mHoverColor);
     }
 
@@ -125,9 +122,7 @@ public class InfoDropTarget extends ButtonDropTarget {
         super.onDragExit(d);
 
         if (!d.dragComplete) {
-        	if (mDrawable != null) {
-        		mDrawable.resetTransition();
-        	}	
+            mDrawable.resetTransition();
             setTextColor(mOriginalTextColor);
         }
     }

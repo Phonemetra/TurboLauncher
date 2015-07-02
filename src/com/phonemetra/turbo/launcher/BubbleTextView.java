@@ -31,7 +31,7 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
-public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutListener {
+public class BubbleTextView extends TextView {
     static final float SHADOW_LARGE_RADIUS = 4.0f;
     static final float SHADOW_SMALL_RADIUS = 1.75f;
     static final float SHADOW_Y_OFFSET = 2.0f;
@@ -61,10 +61,6 @@ public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutLis
 
     private boolean mStayPressed;
     private CheckLongPressHelper mLongPressHelper;
-    
-    private boolean mTextVisible = true;
-    private CharSequence mVisibleText;
-
 
     public BubbleTextView(Context context) {
         super(context);
@@ -176,23 +172,6 @@ public class BubbleTextView extends TextView implements ShortcutInfo.ShortcutLis
             d.setState(getDrawableState());
         }
         super.drawableStateChanged();
-    }
-    
-    @Override
-    public void onTitleChanged(ShortcutInfo item) {
-        if (mTextVisible) {
-            setText(item.title);
-        } else {
-            mVisibleText = item.title;
-        }
-    }
-
-    
-    @Override
-    public void onIconChanged(ShortcutInfo item) {
-        setCompoundDrawablesWithIntrinsicBounds(null,
-                new FastBitmapDrawable(item.getIcon(null)),
-                null, null);
     }
 
     /**

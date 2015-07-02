@@ -329,16 +329,7 @@ public class LauncherProvider extends ContentProvider {
         }
     }
 
-    private boolean areGAppsInstalled() {
-        PackageManager pm = getContext().getPackageManager();
-        try {
-            PackageInfo info = pm.getPackageInfo("com.google.android.gsf",PackageManager.GET_META_DATA);
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
-        return true;
-    }
-
+   
     public void migrateLauncher2Shortcuts() {
         mOpenHelper.migrateLauncher2Shortcuts(mOpenHelper.getWritableDatabase(),
                 LauncherSettings.Favorites.OLD_CONTENT_URI);
@@ -863,16 +854,6 @@ public class LauncherProvider extends ContentProvider {
                 } finally {
                     db.endTransaction();
                 }
-            }
-
-            if (version < 19) {
-                // We use the db version upgrade here to identify users who may not have seen
-                // clings yet (because they weren't available), but for whom the clings are now
-                // available (tablet users). Because one of the possible cling flows (migration)
-                // is very destructive (wipes out workspaces), we want to prevent this from showing
-                // until clear data. We do so by marking that the clings have been shown.
-                LauncherClings.synchonouslyMarkFirstRunClingDismissed(mContext);
-                version = 19;
             }
 
             if (oldVersion < 20) {

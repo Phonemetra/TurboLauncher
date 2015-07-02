@@ -214,11 +214,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
     private ArrayList<ComponentName> mProtectedApps;
     private ArrayList<String> mProtectedPackages;
 
-    // Cling
-    private boolean mHasShownAllAppsCling;
-    private int mClingFocusedX;
-    private int mClingFocusedY;
-
     // Caching
     private Canvas mCanvas;
     private IconCache mIconCache;
@@ -316,8 +311,6 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         mWidgetWidthGap = mWidgetHeightGap = grid.edgeMarginPx;
         mWidgetCountX = a.getInt(R.styleable.AppsCustomizePagedView_widgetCountX, 2);
         mWidgetCountY = a.getInt(R.styleable.AppsCustomizePagedView_widgetCountY, 2);
-        mClingFocusedX = a.getInt(R.styleable.AppsCustomizePagedView_clingFocusedX, 0);
-        mClingFocusedY = a.getInt(R.styleable.AppsCustomizePagedView_clingFocusedY, 0);
         a.recycle();
         mWidgetSpacingLayout = new PagedViewCellLayout(getContext());
 
@@ -467,33 +460,9 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
         int page = getPageForComponent(mSaveInstanceStateItemIndex);
         invalidatePageData(Math.max(0, page), hostIsTransitioning);
 
-        // Show All Apps cling if we are finished transitioning, otherwise, we will try again when
-        // the transition completes in AppsCustomizeLayout (otherwise the wrong offsets will be
-        // returned while animating)
-        if (!hostIsTransitioning) {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    showAllAppsCling();
-                }
-            });
-        }
     }
 
-    void showAllAppsCling() {
-        if (!mHasShownAllAppsCling && isDataReady()) {
-            mHasShownAllAppsCling = true;
-            // Calculate the position for the cling punch through
-            int[] offset = new int[2];
-            int[] pos = mWidgetSpacingLayout.estimateCellPosition(mClingFocusedX, mClingFocusedY);
-            mLauncher.getDragLayer().getLocationInDragLayer(this, offset);
-            // PagedViews are centered horizontally but top aligned
-            // Note we have to shift the items up now that Launcher sits under the status bar
-            pos[0] += (getMeasuredWidth() - mWidgetSpacingLayout.getMeasuredWidth()) / 2 +
-                    offset[0];
-            pos[1] += offset[1] - mLauncher.getDragLayer().getPaddingTop();
-        }
-    }
+   
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -532,8 +501,14 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
                     if (minSpanX <= (int) grid.numColumns &&
                         minSpanY <= (int) grid.numRows) {
                         mWidgets.add(widget);
-                    } 
-                } 
+                    } else {
+                        Log.e(TAG, "Widget " + widget.provider + " can not fit on this device (" +
+                              widget.minWidth + ", " + widget.minHeight + ")");
+                    }
+                } else {
+                    Log.e(TAG, "Widget " + widget.provider + " has invalid dimensions (" +
+                          widget.minWidth + ", " + widget.minHeight + ")");
+                }
             } else {
                 // just add shortcuts
                 mWidgets.add(o);
@@ -866,6 +841,8 @@ public class AppsCustomizePagedView extends PagedViewWithDraggableItems implemen
             }
         }
 
+        // We delay entering spring-loaded mode slightly to make sure the UI
+        // thready is free of any work.
         postDelayed(new Runnable() {
             @Override
             public void run() {

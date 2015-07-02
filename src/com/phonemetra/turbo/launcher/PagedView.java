@@ -65,7 +65,7 @@ interface Page {
 }
 
 public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarchyChangeListener {
-   
+    private static final String TAG = "PagedView";
     protected static final int INVALID_PAGE = -1;
     private static final int MIN_LENGTH_FOR_FLING = 25;
 
@@ -1155,19 +1155,22 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
 
     @Override
     public void removeView(View v) {
-         
+        // XXX: We should find a better way to hook into this before the view
+        // gets removed form its parent...
         removeMarkerForView(indexOfChild(v));
         super.removeView(v);
     }
     @Override
     public void removeViewInLayout(View v) {
-         
+        // XXX: We should find a better way to hook into this before the view
+        // gets removed form its parent...
         removeMarkerForView(indexOfChild(v));
         super.removeViewInLayout(v);
     }
     @Override
     public void removeViewAt(int index) {
-        
+        // XXX: We should find a better way to hook into this before the view
+        // gets removed form its parent...
         removeViewAt(index);
         super.removeViewAt(index);
     }

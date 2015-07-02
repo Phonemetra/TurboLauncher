@@ -24,9 +24,7 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -41,7 +39,6 @@ import android.content.ComponentCallbacks2;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -53,7 +50,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
@@ -64,10 +60,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.speech.RecognizerIntent;
 import android.text.Selection;
 import android.text.SpannableStringBuilder;
@@ -88,14 +82,11 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Advanceable;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
@@ -110,7 +101,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -124,21 +114,25 @@ public class Launcher extends Activity implements View.OnClickListener,
 	static final String TAG = "Launcher";
 
 	DeviceProfile mGrid;
-
-	static final boolean PROFILE_STARTUP = false;
-	static final boolean DEBUG_WIDGETS = false;
-
+	
 	private static final int REQUEST_CREATE_SHORTCUT = 1;
 	private static final int REQUEST_CREATE_APPWIDGET = 5;
 	private static final int REQUEST_PICK_APPLICATION = 6;
 	private static final int REQUEST_PICK_SHORTCUT = 7;
 	private static final int REQUEST_PICK_APPWIDGET = 9;
 	private static final int REQUEST_PICK_WALLPAPER = 10;
+
 	private static final int REQUEST_BIND_APPWIDGET = 11;
 
 	static final int REQUEST_PICK_ICON = 13;
 
 	private static final int REQUEST_LOCK_PATTERN = 14;
+
+	/**
+	 * IntentStarter uses request codes starting with this. This must be greater
+	 * than all activity request codes used internally.
+	 */
+	protected static final int REQUEST_LAST = 100;
 
 	static final String EXTRA_SHORTCUT_DUPLICATE = "duplicate";
 
@@ -180,8 +174,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 	private static final String RUNTIME_STATE_PENDING_ADD_WIDGET_ID = "launcher.add_widget_id";
 	// Type: int[]
 	private static final String RUNTIME_STATE_VIEW_IDS = "launcher.view_ids";
-
-	static final String FIRST_RUN_ACTIVITY_DISPLAYED = "launcher.first_run_activity_displayed";
 
 	private static final String TOOLBAR_ICON_METADATA_NAME = "com.android.launcher.toolbar_icon";
 	private static final String TOOLBAR_SEARCH_ICON_METADATA_NAME = "com.android.launcher.toolbar_search_icon";
@@ -226,7 +218,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 	private DragController mDragController;
 
 	private TransitionEffectsFragment mTransitionEffectsFragment;
-	private LauncherClings mLauncherClings;
+	
 	protected HiddenFolderFragment mHiddenFolderFragment;
 
 	private AppWidgetManager mAppWidgetManager;
@@ -275,8 +267,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 	// Keep track of whether the user has left launcher
 	private static boolean sPausedFromUserAction = false;
 
-	private Bundle mSavedInstanceState;
-
 	private Dialog mTransitionEffectDialog;
 
 	protected LauncherModel mModel;
@@ -314,11 +304,13 @@ public class Launcher extends Activity implements View.OnClickListener,
 	private final ArrayList<Integer> mSynchronouslyBoundPages = new ArrayList<Integer>();
 	private static final boolean DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE = false;
 
+	static final ArrayList<String> sDumpLogs = new ArrayList<String>();
 	static Date sDateStamp = new Date();
 	static DateFormat sDateFormat = DateFormat.getDateTimeInstance(
 			DateFormat.SHORT, DateFormat.SHORT);
 	static long sRunStart = System.currentTimeMillis();
-	
+	static final String CORRUPTION_EMAIL_SENT_KEY = "corruptionEmailSent";
+
 	private SharedPreferences mSharedPrefs;
 
 	private static ArrayList<ComponentName> mIntentsOnWorkspaceFromUpgradePath = null;
@@ -332,7 +324,12 @@ public class Launcher extends Activity implements View.OnClickListener,
 	private Rect mRectForFolderAnimation = new Rect();
 
 	private BubbleTextView mWaitingForResume;
-	private ImageButton mDialogIcon;
+	private boolean mShouldRestart = false;
+
+	// Theme
+	public static final String THEME_DEFAULT = "Turbo Launcher.Default theme";
+	private Typeface themeFont = null;
+	private boolean showThemeFont;
 
 	// Preferences
 	private boolean mHideIconLabels;
@@ -407,7 +404,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 				Context.MODE_PRIVATE);
 
 		mDragController = new DragController(this);
-		mLauncherClings = new LauncherClings(this);
+		
 		mInflater = getLayoutInflater();
 
 		mStats = new Stats(this);
@@ -418,12 +415,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		mAppWidgetHost.startListening();
 
 		mPaused = false;
-
-		if (PROFILE_STARTUP) {
-			android.os.Debug.startMethodTracing(Environment
-					.getExternalStorageDirectory() + "/launcher");
-		}
-
+	
 		checkForLocaleChange();
 		setContentView(R.layout.launcher);
 
@@ -436,11 +428,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 
 		mSavedState = savedInstanceState;
 		restoreState(mSavedState);
-
-		if (PROFILE_STARTUP) {
-			android.os.Debug.stopMethodTracing();
-		}
-
+	
 		if (!mRestoring) {
 			if (DISABLE_SYNCHRONOUS_BINDING_CURRENT_PAGE
 					|| sPausedFromUserAction) {
@@ -470,25 +458,14 @@ public class Launcher extends Activity implements View.OnClickListener,
 		// current orientation
 		unlockScreenOrientation(true);
 
-		// The two first run cling paths are mutually exclusive, if the launcher
-		// is preinstalled
-		// on the device, then we always show the first run cling experience (or
-		// if there is no
-		// launcher2). Otherwise, we prompt the user upon started for migration
-		showFirstRunActivity();
-		if (mLauncherClings.shouldShowFirstRunOrMigrationClings()) {
-			if (mModel.canMigrateFromOldLauncherDb(this)) {
-				mLauncherClings.showMigrationCling();
-			} else {
-				mLauncherClings.showFirstRunCling();
-			}
-		} else {
-			mLauncherClings.removeFirstRunAndMigrationClings();
-		}
 		IntentFilter protectedAppsFilter = new IntentFilter(
 				"phonemetra.intent.action.PROTECTED_COMPONENT_UPDATE");
 		registerReceiver(protectedAppsChangedReceiver, protectedAppsFilter,
 				"phonemetra.permission.PROTECTED_APP", null);
+	}
+
+	public Typeface getThemeFont() {
+		return themeFont;
 	}
 
 	void initializeDynamicGrid() {
@@ -626,8 +603,8 @@ public class Launcher extends Activity implements View.OnClickListener,
 				@Override
 				protected void onPostExecute(LocaleConfiguration result) {
 					sLocaleConfiguration = result;
-					checkForLocaleChange(); 
-											
+					checkForLocaleChange(); // recursive, but now with a locale
+											// configuration
 				}
 			}.execute();
 			return;
@@ -836,58 +813,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 						ON_ACTIVITY_RESULT_ANIMATION_DELAY);
 			}
 			return;
-		} else if (requestCode == REQUEST_PICK_ICON) {
-			
-			if (resultCode == RESULT_OK) {
-				if (data == null) {
-                    // Get/Set default icon
-                    String id = (String) mDialogIcon.getTag();
-                    final PackageManager manager = getPackageManager();
-
-                    final Cursor c = getContentResolver().query(LauncherSettings.Favorites.CONTENT_URI,
-                            null, LauncherSettings.Favorites._ID + "=?", new String[]{id}, null);
-                    if (c != null && c.getCount() > 0) {
-                        c.moveToFirst();
-                        final int itemTypeIndex = c.getColumnIndexOrThrow(
-                                LauncherSettings.Favorites.ITEM_TYPE);
-                        final int titleIndex = c.getColumnIndexOrThrow
-                                (LauncherSettings.Favorites.TITLE);
-                        final int iconTypeIndex = c.getColumnIndexOrThrow(
-                                LauncherSettings.Favorites.ICON_TYPE);
-                        final int iconIndex = c.getColumnIndexOrThrow(LauncherSettings.Favorites.ICON);
-                        final int iconPackageIndex = c.getColumnIndexOrThrow(
-                                LauncherSettings.Favorites.ICON_PACKAGE);
-                        final int iconResourceIndex = c.getColumnIndexOrThrow(
-                                LauncherSettings.Favorites.ICON_RESOURCE);
-                        final int intentIndex = c.getColumnIndexOrThrow
-                                (LauncherSettings.Favorites.INTENT);
-                        String intentDescription = c.getString(intentIndex);
-                        Intent intent = null;
-                        try {
-                            intent = Intent.parseUri(intentDescription, 0);
-                        } catch (URISyntaxException e) {
-                            c.close();
-                            return;
-                        }
-                        int itemType = c.getInt(itemTypeIndex);
-                        ShortcutInfo info = null;
-                        if (itemType == LauncherSettings.Favorites.ITEM_TYPE_APPLICATION) {
-                            info = mModel.getShortcutInfo(manager, intent, this, c, iconIndex,
-                                    titleIndex, null);
-                        } else if (itemType == LauncherSettings.Favorites.ITEM_TYPE_SHORTCUT) {
-                            info = mModel.getShortcutInfo(c, this, iconTypeIndex,
-                                    iconPackageIndex, iconResourceIndex, iconIndex,
-                                    titleIndex);
-                        }
-                        
-                        
-                        
-                        mDialogIcon.setImageBitmap(info.getIcon(null));
-                        mDialogIcon.setTag(null);
-                        c.close();
-                    }
-				}  
-			}		
 		} else if (requestCode == REQUEST_PICK_WALLPAPER) {
 			if (resultCode == RESULT_OK && mWorkspace.isInOverviewMode()) {
 				mWorkspace.exitOverviewMode(false);
@@ -1035,6 +960,8 @@ public class Launcher extends Activity implements View.OnClickListener,
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (shouldRestart())
+			return;
 
 		// Restore the previous launcher state
 		if (mOnResumeState == State.WORKSPACE) {
@@ -1188,6 +1115,23 @@ public class Launcher extends Activity implements View.OnClickListener,
 		public void onHide();
 
 		public void onScrollProgressChanged(float progress);
+	}
+
+	public void startThemeSettings() {
+		// Intent settings = new
+		// Intent().setClassName(OverviewSettingsPanel.ANDROID_SETTINGS,
+		// OverviewSettingsPanel.THEME_SETTINGS);
+		// startActivity(settings);
+
+		Intent themeSettings = new Intent();
+		themeSettings.setClass(Launcher.this, ThemeSettingsActivity.class);
+		startActivity(themeSettings);
+
+		if (mWorkspace.isInOverviewMode()) {
+			mWorkspace.exitOverviewMode(false);
+		} else if (mAppsCustomizeContent.isInOverviewMode()) {
+			mAppsCustomizeContent.exitOverviewMode(false);
+		}
 	}
 
 	public void onClickSortModeButton(View v) {
@@ -1347,8 +1291,15 @@ public class Launcher extends Activity implements View.OnClickListener,
 		return false;
 	}
 
-	protected void startSettings() {
-	}
+	public void startSettings() {
+        Intent settings;
+        settings = new Intent(android.provider.Settings.ACTION_SETTINGS);
+        startActivity(settings);
+        if (mWorkspace.isInOverviewMode()) {
+            mWorkspace.exitOverviewMode(false);
+        }
+    }
+
 
 	public interface QSBScroller {
 		public void setScrollY(int scrollY);
@@ -1571,55 +1522,35 @@ public class Launcher extends Activity implements View.OnClickListener,
 			mSearchDropTargetBar.setup(this, dragController);
 		}
 
+		// Load the specified theme
+		String themePackage = SettingsProvider.getThemePackageName(this,
+				THEME_DEFAULT);
+		PackageManager pm = getPackageManager();
+		Resources themeResources = null;
+		if (!themePackage.equals(THEME_DEFAULT)) {
+			try {
+				themeResources = pm.getResourcesForApplication(themePackage);
+			} catch (NameNotFoundException e) {
+				SettingsProvider.setThemePackageName(this,
+						Launcher.THEME_DEFAULT);
+			}
+		}
+		if (themeResources != null) {
+
+			try {
+
+				showThemeFont = SettingsProvider.getThemeFont(this);
+
+				if (showThemeFont) {
+					themeFont = Typeface.createFromAsset(
+							themeResources.getAssets(), "themefont.ttf");
+				}
+			} catch (RuntimeException e) {
+
+			}
+		}
+
 	}
-	
-	/**
-     * Starts shortcut rename dialog.
-     *
-     * @param info The shortcut to be edited
-     */
-    void updateShortcut(final ShortcutInfo info) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View layout = mInflater.inflate(R.layout.dialog_edit, null);
-        mDialogIcon = (ImageButton) layout.findViewById(R.id.dialog_edit_icon);
-        mDialogIcon.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mDialogIcon.setImageBitmap(info.getIcon(mIconCache));
-        mDialogIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mDialogIcon.setTag(String.valueOf(info.id));
-                //IconPackHelper.pickIconPack(Launcher.this, true);
-            }
-        });
-        final EditText title = (EditText) layout.findViewById(R.id.dialog_edit_text);
-        title.setText(info.title);
-        builder.setView(layout)
-                .setTitle(info.title)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        
-                         info.setTitle(title.getText());
-                         info.setIcon(info.getIcon(mIconCache));
-                       
-                        
-                        //TODO TEST
-                        //O prendi quello della Dialog
-                        //info.setIcon(((BitmapDrawable)mDialogIcon.getDrawable()).getBitmap());
-                        //O prendi quello in cache 
-                        //info.setIcon(info.getIcon(mIconCache));
-                        LauncherModel.updateItemInDatabase(Launcher.this, info);
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, null);
-        builder.show();
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mDialogIcon = null;
-            }
-        });
-    }
 
 	/**
 	 * Creates a view representing a shortcut.
@@ -1700,9 +1631,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 			mWorkspace.addApplicationShortcut(info, layout, container,
 					screenId, cellXY[0], cellXY[1], isWorkspaceLocked(), cellX,
 					cellY);
-		} else {
-			Log.e(TAG, "Couldn't find ActivityInfo for selected application: "
-					+ data);
 		}
 	}
 
@@ -2117,10 +2045,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 		return mModel;
 	}
 
-	public LauncherClings getLauncherClings() {
-		return mLauncherClings;
-	}
-
 	protected SharedPreferences getSharedPrefs() {
 		return mSharedPrefs;
 	}
@@ -2386,7 +2310,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 		ComponentName globalSearchActivity = searchManager
 				.getGlobalSearchActivity();
 		if (globalSearchActivity == null) {
-			Log.w(TAG, "No global search activity found.");
 			return;
 		}
 		Intent intent = new Intent(SearchManager.INTENT_ACTION_GLOBAL_SEARCH);
@@ -2415,8 +2338,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		try {
 			startActivity(intent);
 		} catch (ActivityNotFoundException ex) {
-			Log.e(TAG, "Global search activity not found: "
-					+ globalSearchActivity);
+			
 		}
 	}
 
@@ -2830,8 +2752,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 					mWaitingForResume.setStayPressed(true);
 				}
 			}
-			
-				
 		} else if (tag instanceof FolderInfo) {
 			if (v instanceof FolderIcon) {
 				FolderIcon fi = (FolderIcon) v;
@@ -3011,12 +2931,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		} catch (SecurityException e) {
 			Toast.makeText(this, R.string.activity_not_found,
 					Toast.LENGTH_SHORT).show();
-			Log.e(TAG,
-					"Launcher does not have the permission to launch "
-							+ intent
-							+ ". Make sure to create a MAIN intent-filter for the corresponding activity "
-							+ "or use the exported attribute for this activity. "
-							+ "tag=" + tag + " intent=" + intent, e);
+			
 		}
 		return false;
 	}
@@ -3042,10 +2957,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		// it is actually opened. There have been a few instances where this
 		// gets out of sync.
 		if (info.opened && openFolder == null) {
-			Log.d(TAG,
-					"Folder info marked as open, but associated folder is not open. Screen: "
-							+ info.screenId + " (" + info.cellX + ", "
-							+ info.cellY + ")");
+			
 			info.opened = false;
 		}
 
@@ -3219,11 +3131,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		if (folder.getParent() == null) {
 			mDragLayer.addView(folder);
 			mDragController.addDropTarget((DropTarget) folder);
-		} else {
-			Log.w(TAG, "Opening folder (" + folder
-					+ ") which already has a parent (" + folder.getParent()
-					+ ").");
-		}
+		} 
 		folder.animateOpen();
 		growAndFadeOutFolderIcon(folderIcon);
 
@@ -3242,9 +3150,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 				folder.dismissEditingName();
 			}
 			closeFolder(folder);
-
-			// Dismiss the folder cling
-			mLauncherClings.dismissFolderCling(null);
 		}
 	}
 
@@ -3258,9 +3163,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 		}
 		folder.animateClosed();
 
-		// Notify the accessibility manager that this folder "window" has
-		// disappeard and no
-		// longer occludeds the workspace items
 		getDragLayer().sendAccessibilityEvent(
 				AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
 	}
@@ -3293,7 +3195,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		resetAddInfo();
 		CellLayout.CellInfo longClickCellInfo = (CellLayout.CellInfo) v
 				.getTag();
-		// This happens when long clicking an item with the dpad/trackball
+
 		if (longClickCellInfo == null) {
 			return true;
 		}
@@ -3379,18 +3281,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 				: null);
 	}
 
-	void updateWallpaperVisibility(boolean visible) {
-		int wpflags = visible ? WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
-				: 0;
-		int curflags = getWindow().getAttributes().flags
-				& WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
-		if (wpflags != curflags) {
-			getWindow().setFlags(wpflags,
-					WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
-		}
-		setWorkspaceBackground(visible);
-	}
-
+	
 	private void dispatchOnLauncherTransitionPrepare(View v, boolean animated,
 			boolean toWorkspace) {
 		if (v instanceof LauncherTransitionable) {
@@ -3427,23 +3318,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		dispatchOnLauncherTransitionStep(v, 1f);
 	}
 
-	/**
-	 * Things to test when changing the following seven functions. - Home from
-	 * workspace - from center screen - from other screens - Home from all apps
-	 * - from center screen - from other screens - Back from all apps - from
-	 * center screen - from other screens - Launch app from workspace and quit -
-	 * with back - with home - Launch app from all apps and quit - with back -
-	 * with home - Go to a screen that's not the default, then all apps, and
-	 * launch and app, and go back - with back -with home - On workspace, long
-	 * press power and go back - with back - with home - On all apps, long press
-	 * power and go back - with back - with home - On workspace, power off - On
-	 * all apps, power off - Launch an app and turn off the screen while in that
-	 * app - Go back with home key - Go back with back key TODO: make this not
-	 * go to workspace - From all apps - From workspace - Enter and exit car
-	 * mode (becuase it causes an extra configuration changed) - From all apps -
-	 * From the center workspace - From another workspace
-	 */
-
+	
 	/**
 	 * Zoom the camera out from the workspace to reveal 'toView'. Assumes that
 	 * the view to show is anchored at either the very top or very bottom of the
@@ -3817,10 +3692,6 @@ public class Launcher extends Activity implements View.OnClickListener,
 			@Override
 			public void run() {
 				if (successfulDrop) {
-					// Before we show workspace, hide all apps again because
-					// exitSpringLoadedDragMode made it visible. This is a bit
-					// hacky; we should
-					// clean up our state transition functions
 					mAppsCustomizeLayout.setVisibility(View.GONE);
 					showWorkspace(true, onCompleteRunnable);
 				} else {
@@ -3929,16 +3800,9 @@ public class Launcher extends Activity implements View.OnClickListener,
 				}
 			}
 		} catch (NameNotFoundException e) {
-			// This can happen if the activity defines an invalid drawable
-			Log.w(TAG,
-					"Failed to load toolbar icon; "
-							+ activityName.flattenToShortString()
-							+ " not found", e);
+			
 		} catch (Resources.NotFoundException nfe) {
-			// This can happen if the activity defines an invalid drawable
-			Log.w(TAG,
-					"Failed to load toolbar icon from "
-							+ activityName.flattenToShortString(), nfe);
+			
 		}
 		return null;
 	}
@@ -4173,7 +4037,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 	private boolean waitUntilResume(Runnable run,
 			boolean deletePreviousRunnables) {
 		if (mPaused) {
-			Log.i(TAG, "Deferring update until onResume");
+			
 			if (deletePreviousRunnables) {
 				while (mBindOnResumeCallbacks.remove(run)) {
 				}
@@ -4209,7 +4073,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 	 */
 	public boolean setLoadOnResume() {
 		if (mPaused) {
-			Log.i(TAG, "setLoadOnResume");
+			
 			mOnResumeNeedsLoad = true;
 			return true;
 		} else {
@@ -4459,19 +4323,13 @@ public class Launcher extends Activity implements View.OnClickListener,
 			return;
 		}
 
-		final long start = DEBUG_WIDGETS ? SystemClock.uptimeMillis() : 0;
-		if (DEBUG_WIDGETS) {
-			Log.d(TAG, "bindAppWidget: " + item);
-		}
+		
 		final Workspace workspace = mWorkspace;
 
 		final int appWidgetId = item.appWidgetId;
 		final AppWidgetProviderInfo appWidgetInfo = mAppWidgetManager
 				.getAppWidgetInfo(appWidgetId);
-		if (DEBUG_WIDGETS) {
-			Log.d(TAG, "bindAppWidget: id=" + item.appWidgetId
-					+ " belongs to component " + appWidgetInfo.provider);
-		}
+		
 
 		item.hostView = mAppWidgetHost.createView(this, appWidgetId,
 				appWidgetInfo);
@@ -4485,10 +4343,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 
 		workspace.requestLayout();
 
-		if (DEBUG_WIDGETS) {
-			Log.d(TAG, "bound widget id=" + item.appWidgetId + " in "
-					+ (SystemClock.uptimeMillis() - start) + "ms");
-		}
+		
 	}
 
 	public void onPageBoundSynchronously(int page) {
@@ -4747,15 +4602,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 		}
 	}
 
-	/**
-	 * Called when the SearchBar hint should be changed.
-	 * 
-	 * @param hint
-	 *            the hint to be displayed in the search bar.
-	 */
-	protected void onSearchBarHintChanged(String hint) {
-		mLauncherClings.updateSearchBarHint(hint);
-	}
+	
 
 	protected boolean isLauncherPreinstalled() {
 		PackageManager pm = getPackageManager();
@@ -4773,79 +4620,8 @@ public class Launcher extends Activity implements View.OnClickListener,
 		}
 	}
 
-	protected String getFirstRunClingSearchBarHint() {
-		return "";
-	}
-
-	protected String getFirstRunCustomContentHint() {
-		return "";
-	}
-
-	protected int getFirstRunFocusedHotseatAppDrawableId() {
-		return -1;
-	}
-
-	protected ComponentName getFirstRunFocusedHotseatAppComponentName() {
-		return null;
-	}
-
-	protected int getFirstRunFocusedHotseatAppRank() {
-		return -1;
-	}
-
-	protected String getFirstRunFocusedHotseatAppBubbleTitle() {
-		return "";
-	}
-
-	protected String getFirstRunFocusedHotseatAppBubbleDescription() {
-		return "";
-	}
-
-	public void dismissFirstRunCling(View v) {
-		mLauncherClings.dismissFirstRunCling(v);
-	}
-
-	public void dismissMigrationClingCopyApps(View v) {
-		mLauncherClings.dismissMigrationClingCopyApps(v);
-	}
-
-	public void dismissMigrationClingUseDefault(View v) {
-		mLauncherClings.dismissMigrationClingUseDefault(v);
-	}
-
-	public void dismissMigrationWorkspaceCling(View v) {
-		mLauncherClings.dismissMigrationWorkspaceCling(v);
-	}
-
-	public void dismissWorkspaceCling(View v) {
-		mLauncherClings.dismissWorkspaceCling(v);
-	}
-
-	public void dismissFolderCling(View v) {
-		mLauncherClings.dismissFolderCling(v);
-	}
-
-	private boolean shouldRunFirstRunActivity() {
-		return !ActivityManager.isRunningInTestHarness()
-				&& !mSharedPrefs
-						.getBoolean(FIRST_RUN_ACTIVITY_DISPLAYED, false);
-	}
-
-	public void showFirstRunActivity() {
-		if (shouldRunFirstRunActivity() && hasFirstRunActivity()) {
-			Intent firstRunIntent = getFirstRunActivity();
-			if (firstRunIntent != null) {
-				startActivity(firstRunIntent);
-				markFirstRunActivityShown();
-			}
-		}
-	}
-
-	private void markFirstRunActivityShown() {
-		SharedPreferences.Editor editor = mSharedPrefs.edit();
-		editor.putBoolean(FIRST_RUN_ACTIVITY_DISPLAYED, true);
-		editor.apply();
-	}
+	
+	
 
 	void showWorkspaceSearchAndHotseat() {
 		if (mWorkspace != null)
@@ -4903,6 +4679,7 @@ public class Launcher extends Activity implements View.OnClickListener,
 			editor.putBoolean(SettingsProvider.SETTINGS_CHANGED, false);
 			editor.commit();
 		}
+		mShouldRestart = true;
 		return settingsChanged;
 	}
 
@@ -4939,8 +4716,21 @@ public class Launcher extends Activity implements View.OnClickListener,
 		mGrid.layout(this);
 		mWorkspace.showOutlines();
 
-		// Synchronized reload
 		mModel.startLoader(true, mWorkspace.getCurrentPage());
+	}
+	
+	private boolean shouldRestart() {
+		try {
+			if (mShouldRestart) {
+				android.os.Process.killProcess(android.os.Process.myPid());
+				finish();
+				startActivity(getIntent());
+				return true;
+			}
+		} catch (Exception e) {
+
+		}
+		return false;
 	}
 
 }
@@ -4964,3 +4754,5 @@ interface DebugIntents {
 	static final String DELETE_DATABASE = "com.phonemetra.turbo.launcher.action.DELETE_DATABASE";
 	static final String MIGRATE_DATABASE = "com.phonemetra.turbo.launcher.action.MIGRATE_DATABASE";
 }
+
+

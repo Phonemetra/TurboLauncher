@@ -1,5 +1,7 @@
 package com.phonemetra.turbo.launcher;
 
+import com.phonemetra.turbo.launcher.R;
+
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -12,8 +14,6 @@ import android.graphics.Rect;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-
-import com.phonemetra.turbo.launcher.R;
 
 public class AppWidgetResizeFrame extends FrameLayout {
     private LauncherAppWidgetHostView mWidgetView;

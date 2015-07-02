@@ -24,10 +24,14 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 
- 
+/*
+ *  This is a helper class that listens to updates from the corresponding animation.
+ *  For the first two frames, it adjusts the current play time of the animation to
+ *  prevent jank at the beginning of the animation
+ */
 public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
     implements ValueAnimator.AnimatorUpdateListener {
-    
+    private static final boolean DEBUG = false;
     private static final int MAX_DELAY = 1000;
     private static final int IDEAL_FRAME_DURATION = 16;
     private View mTarget;
@@ -50,7 +54,7 @@ public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
         vpa.setListener(this);
     }
 
-    
+    // only used for ViewPropertyAnimators
     public void onAnimationStart(Animator animation) {
         final ValueAnimator va = (ValueAnimator) animation;
         va.addUpdateListener(FirstFrameAnimatorHelper.this);
@@ -66,10 +70,14 @@ public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
             view.getViewTreeObserver().removeOnDrawListener(sGlobalDrawListener);
         }
         sGlobalDrawListener = new ViewTreeObserver.OnDrawListener() {
-                 
+                private long mTime = System.currentTimeMillis();
                 public void onDraw() {
                     sGlobalFrameCounter++;
-                     
+                    if (DEBUG) {
+                        long newTime = System.currentTimeMillis();
+                        Log.d("FirstFrameAnimatorHelper", "TICK " + (newTime - mTime));
+                        mTime = newTime;
+                    }
                 }
             };
         view.getViewTreeObserver().addOnDrawListener(sGlobalDrawListener);
@@ -117,10 +125,12 @@ public class FirstFrameAnimatorHelper extends AnimatorListenerAdapter
                             }
                         });
                 }
-                 
+                if (DEBUG) print(animation);
             }
             mHandlingOnAnimationUpdate = false;
-        }  
+        } else {
+            if (DEBUG) print(animation);
+        }
     }
 
     public void print(ValueAnimator animation) {

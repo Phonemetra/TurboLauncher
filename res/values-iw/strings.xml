@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/*
+* Copyright (C) 2008 The Android Open Source Project
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+ -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="home" msgid="7658288663002113681">"דף הבית"</string>
+    <string name="uid_name" msgid="7820867637514617527">"אפליקציות הליבה של Android"</string>
+    <string name="folder_name" msgid="7371454440695724752"></string>
+    <string name="wallpaper_instructions" msgid="563973358787555519">"הגדר טפט"</string>
+  <plurals name="number_of_items_selected">
+    <item quantity="zero" msgid="7464587177007785408">"%1$d נבחרו"</item>
+    <item quantity="one" msgid="142482526010824029">"%1$d נבחרו"</item>
+    <item quantity="other" msgid="1418352074806573570">"%1$d נבחרו"</item>
+  </plurals>
+    <string name="wallpaper_accessibility_name" msgid="1655953108132967972">"טפט %1$d מתוך %2$d"</string>
+    <string name="announce_selection" msgid="8338254712932127413">"בחרת <xliff:g id="LABEL">%1$s</xliff:g>"</string>
+    <string name="wallpaper_delete" msgid="8095005658756613921">"מחק"</string>
+    <string name="pick_image" msgid="1272073934062909527">"בחר תמונה"</string>
+    <string name="pick_wallpaper" msgid="8179698221502010609">"טפטים"</string>
+    <string name="crop_wallpaper" msgid="8334345984491368009">"חתוך את הטפט"</string>
+    <string name="activity_not_found" msgid="8071924732094499514">"האפליקציה לא מותקנת."</string>
+    <string name="widgets_tab_label" msgid="2921133187116603919">"רכיבי ווידג\'ט"</string>
+    <string name="widget_adder" msgid="3201040140710381657">"רכיבי ווידג\'ט"</string>
+    <string name="long_press_widget_to_add" msgid="7699152356777458215">"גע נגיעה רציפה בווידג\'ט כדי לבחור בו."</string>
+    <string name="market" msgid="2619650989819296998">"קנה"</string>
+    <string name="widget_dims_format" msgid="2370757736025621599">"%1$d × %2$d"</string>
+    <string name="external_drop_widget_error" msgid="3165821058322217155">"לא ניתן היה לשחרר את הפריט במסך דף הבית הזה."</string>
+    <string name="external_drop_widget_pick_title" msgid="3486317258037690630">"בחר ווידג\'ט ליצירה"</string>
+    <string name="rename_folder_label" msgid="3727762225964550653">"שם תיקיה"</string>
+    <string name="rename_folder_title" msgid="3771389277707820891">"שנה את שם התיקיה"</string>
+    <string name="rename_action" msgid="5559600076028658757">"אישור"</string>
+    <string name="cancel_action" msgid="7009134900002915310">"בטל"</string>
+    <string name="menu_item_add_item" msgid="1264911265836810421">"הוסף למסך דף הבית"</string>
+    <string name="group_applications" msgid="3797214114206693605">"אפליקציות"</string>
+    <string name="group_shortcuts" msgid="6012256992764410535">"קיצורי דרך"</string>
+    <string name="group_widgets" msgid="1569030723286851002">"רכיבי ווידג\'ט"</string>
+    <string name="completely_out_of_space" msgid="6106288382070760318">"אין יותר מקום במסכי דף הבית."</string>
+    <string name="out_of_space" msgid="4691004494942118364">"אין עוד מקום במסך דף הבית הזה."</string>
+    <string name="hotseat_out_of_space" msgid="9139760413395605841">"אין יותר מקום בפס האפליקציות."</string>
+    <string name="invalid_hotseat_item" msgid="1211534262129849507">"הווידג\'ט הזה גדול מדי עבור פס האפליקציות."</string>
+    <string name="shortcut_installed" msgid="1701742129426969556">"קיצור הדרך \'<xliff:g id="NAME">%s</xliff:g>\' נוצר."</string>
+    <string name="shortcut_uninstalled" msgid="8176767991305701821">"קיצור הדרך \'<xliff:g id="NAME">%s</xliff:g>\' הוסר."</string>
+    <string name="shortcut_duplicate" msgid="9167217446062498127">"קיצור הדרך \'<xliff:g id="NAME">%s</xliff:g>\' כבר קיים."</string>
+    <string name="title_select_shortcut" msgid="6680642571148153868">"בחר קיצור דרך"</string>
+    <string name="title_select_application" msgid="3280812711670683644">"בחר אפליקציה"</string>
+    <string name="all_apps_button_label" msgid="9110807029020582876">"אפליקציות"</string>
+    <string name="all_apps_home_button_label" msgid="252062713717058851">"דף הבית"</string>
+    <string name="delete_zone_label_workspace" msgid="4009607676751398685">"הסר"</string>
+    <string name="delete_zone_label_all_apps" msgid="8083826390278958980">"הסר התקנה"</string>
+    <string name="delete_target_label" msgid="1822697352535677073">"הסר"</string>
+    <string name="delete_target_uninstall_label" msgid="5100785476250872595">"הסר התקנה"</string>
+    <string name="info_target_label" msgid="8053346143994679532">"פרטי אפליקציה"</string>
+    <string name="accessibility_search_button" msgid="1628520399424565142">"חפש"</string>
+    <string name="accessibility_voice_search_button" msgid="4637324840434406584">"חיפוש קולי"</string>
+    <string name="accessibility_all_apps_button" msgid="2603132375383800483">"אפליקציות"</string>
+    <string name="accessibility_delete_button" msgid="6466114477993744621">"הסר"</string>
+    <string name="delete_zone_label_all_apps_system_app" msgid="449755632749610895">"הסר את התקנת העדכון"</string>
+    <string name="cab_menu_delete_app" msgid="7435191475867183689">"הסר את התקנת האפליקציה"</string>
+    <string name="cab_menu_app_info" msgid="8593722221450362342">"פרטי האפליקציה"</string>
+    <string name="cab_app_selection_text" msgid="374688303047985416">"נבחרה אפליקציה אחת"</string>
+    <string name="cab_widget_selection_text" msgid="1833458597831541241">"נבחר ווידג\'ט אחד"</string>
+    <string name="cab_folder_selection_text" msgid="7999992513806132118">"נבחרה תיקיה אחת"</string>
+    <string name="cab_shortcut_selection_text" msgid="2103811025667946450">"נבחר קיצור דרך אחד"</string>
+    <string name="permlab_install_shortcut" msgid="5632423390354674437">"התקן קיצורי דרך"</string>
+    <string name="permdesc_install_shortcut" msgid="923466509822011139">"מאפשר לאפליקציה להוסיף קיצורי דרך ללא התערבות המשתמש."</string>
+    <string name="permlab_uninstall_shortcut" msgid="864595034498083837">"הסר התקנה של קיצורי דרך"</string>
+    <string name="permdesc_uninstall_shortcut" msgid="5134129545001836849">"מאפשר לאפליקציה להסיר קיצורי דרך ללא התערבות המשתמש."</string>
+    <string name="permlab_read_settings" msgid="1941457408239617576">"קרא הגדרות וקיצורי דרך של דף הבית"</string>
+    <string name="permdesc_read_settings" msgid="5833423719057558387">"מאפשר לאפליקציה לקרוא את ההגדרות וקיצורי הדרך בדף הבית."</string>
+    <string name="permlab_write_settings" msgid="3574213698004620587">"כתוב הגדרות וקיצורי דרך של דף הבית"</string>
+    <string name="permdesc_write_settings" msgid="5440712911516509985">"מאפשר לאפליקציה לשנות את ההגדרות וקיצורי הדרך בדף הבית."</string>
+    <string name="gadget_error_text" msgid="6081085226050792095">"בעיה בטעינת ווידג\'ט"</string>
+    <string name="uninstall_system_app_text" msgid="4172046090762920660">"זוהי אפליקציית מערכת ולא ניתן להסיר את התקנתה."</string>
+    <string name="dream_name" msgid="1530253749244328964">"Rocket Launcher"</string>
+    <string name="folder_hint_text" msgid="6617836969016293992">"תיקיה ללא שם"</string>
+    <string name="workspace_description_format" msgid="2950174241104043327">"מסך דף הבית %1$d"</string>
+    <string name="default_scroll_format" msgid="7475544710230993317">"דף %1$d מתוך %2$d"</string>
+    <string name="workspace_scroll_format" msgid="8458889198184077399">"מסך דף הבית %1$d מתוך %2$d"</string>
+    <string name="apps_customize_apps_scroll_format" msgid="370005296147130238">"דף אפליקציות %1$d מתוך %2$d"</string>
+    <string name="apps_customize_widgets_scroll_format" msgid="3106209519974971521">"דף רכיבי ווידג\'ט ‏%1$d מתוך %2$d"</string>
+    <string name="folder_opened" msgid="94695026776264709">"תיקיה פתוחה, <xliff:g id="WIDTH">%1$d</xliff:g> על <xliff:g id="HEIGHT">%2$d</xliff:g>"</string>
+    <string name="folder_tap_to_close" msgid="1884479294466410023">"גע כדי לסגור את התיקיה"</string>
+    <string name="folder_tap_to_rename" msgid="9191075570492871147">"גע כדי לשמור את שינוי השם"</string>
+    <string name="folder_closed" msgid="4100806530910930934">"התיקיה נסגרה"</string>
+    <string name="folder_renamed" msgid="1794088362165669656">"שם התיקיה שונה ל-<xliff:g id="NAME">%1$s</xliff:g>"</string>
+    <string name="folder_name_format" msgid="6629239338071103179">"תיקיה: <xliff:g id="NAME">%1$s</xliff:g>"</string>
+    <string name="widget_button_text" msgid="2880537293434387943">"רכיבי ווידג\'ט"</string>
+    <string name="wallpaper_button_text" msgid="8404103075899945851">"טפטים"</string>
+    <string name="settings_button_text" msgid="8119458837558863227">"הגדרות"</string>
+    <string name="application_copyright">Copyright \\u00A9 2015 Phonemetra</string>
+  <string name="sort_button_text">מיין</string>
+  <string name="filter_button_text">סינון</string>
+  <string name="default_screen_button_text">מסך ברירת מחדל</string>
+  <string name="transition_effect_button_text">אפקט גלילה</string>
+  <string name="sort_mode_title">כותרת</string>
+  <string name="sort_mode_launch_count">מספר הפעלות</string>
+  <string name="sort_mode_install_time">זמן התקנה</string>
+  <string name="scrolling_page_outlines">תיאור דף</string>
+  <string name="scrolling_fade_adjacent">עימום דפים צדדיים</string>
+  <string name="wallpaper_scroll">גלילת טפט</string>
+  <string name="preferences_title">העדפות</string>
+  <string name="preferences_application_title">יישום</string>
+  <string name="preferences_interface_homescreen_title">מסך הבית</string>
+  <string name="preferences_interface_homescreen_search_title">סרגל החיפוש</string>
+  <string name="preferences_interface_homescreen_search_summary">הצג את שורת החיפוש תמיד בחלק העליון של המסך</string>
+  <string name="preferences_interface_homescreen_general_hide_icon_labels_title">הסתר תוויות הסמלים</string>
+  <string name="preferences_interface_homescreen_general_hide_icon_labels_summary">הסתר תוויות הסמלים על מסך הבית</string>
+  <string name="preferences_interface_drawer_title">מגירה</string>
+  <string name="preferences_interface_drawer_summary">מגירת הווידג\'טים והיישומים</string>
+  <string name="preferences_interface_drawer_apps_category">יישומים</string>
+  <string name="preferences_interface_drawer_hidden_apps_title">יישומים מוסתרים</string>
+  <string name="preferences_interface_drawer_hidden_apps_summary">הסתר יישומים מהמגירה</string>
+  <string name="preferences_interface_drawer_hidden_apps_shortcuts_title">הסר קיצורי דרך</string>
+  <string name="preferences_interface_drawer_hidden_apps_shortcuts_summary">הסר את קיצורי הדרך של היישומים המוסתרים ממסך הבית</string>
+  <string name="preferences_interface_drawer_hidden_apps_widgets_title">הסר ווידג\'טים</string>
+  <string name="preferences_interface_drawer_hidden_apps_widgets_summary">הסר את הווידג\'טים של היישומים המוסתרים ממסך הבית</string>
+  <string name="preferences_interface_drawer_hide_icon_labels_title">הסתר תוויות הסמלים</string>
+  <string name="preferences_interface_drawer_hide_icon_labels_summary">הסתר תוויות הסמלים במגירה</string>
+  <string name="preferences_interface_dock_title">עגינה</string>
+  <string name="preferences_interface_general_title">כללי</string>
+  <string name="preferences_interface_general_icons_category">סמלים</string>
+  <string name="preferences_interface_general_icons_large_title">סמלים גדולים יותר</string>
+  <string name="preferences_interface_general_icons_large_summary">השתמש בצלמיות יישום גדול מאוד במסך הבית ובמגירה</string>
+  <string name="preferences_interface_general_icons_text_style_title">סגנון הגופן של הטקסט</string>
+  <string name="preferences_interface_general_icons_text_style_summary">סגנון ועיצוב הגופן עבור טקסט הסמלים</string>
+  <string name="menu_hidden_apps_delete">אפס</string>
+  <string name="hidden_apps_title">יישומים מוסתרים</string>
+  <string name="launcher_settings">הגדרות מפעיל</string>
+  <string name="home_screen_settings">הגדרות מסך הבית</string>
+  <string name="drawer_settings">הגדרות מגירת יישומים</string>
+  <string name="scroll_effect_text">אפקט גלילה</string>
+  <string name="drawer_sorting_text">מצב המיון</string>
+  <string name="home_screen_search_text">סרגל החיפוש</string>
+  <string name="larger_icons_text">סמלים גדולים יותר</string>
+  <string name="hide_icon_labels">הסתר תוויות הסמלים</string>
+  <string name="setting_state_on">מופעל</string>
+  <string name="setting_state_off">מושבת</string>
+  <string name="themes_button_text">ערכות עיצוב</string>
+</resources>

@@ -38,7 +38,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -68,6 +67,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.phonemetra.turbo.launcher.InstallWidgetReceiver.WidgetMimeTypeHandlerData;
+import com.phonemetra.turbo.launcher.settings.SettingsProvider;
 import com.phonemetra.turbo.launcher.R;
 
 public class LauncherModel extends BroadcastReceiver {
@@ -3117,7 +3118,7 @@ public class LauncherModel extends BroadcastReceiver {
 	 */
 	private Intent getRestoredItemIntent(Cursor c, Context context,
 			Intent intent) {
-		final boolean debug = false;
+
 		ComponentName componentName = intent.getComponent();
 		Intent marketIntent = new Intent(Intent.ACTION_VIEW);
 		Uri marketUri = new Uri.Builder().scheme("market").authority("details")
@@ -3308,26 +3309,10 @@ public class LauncherModel extends BroadcastReceiver {
 		return info;
 	}
 
-	public Drawable getDrawableForCustomIcon(Context context,
-			String customIconResource) {
-		String[] splitResource = customIconResource.split("\\|");
-		String packageName = splitResource[0];
-		String resource = splitResource[1];
-		PackageManager packageManager = context.getPackageManager();
-		Resources resources;
-		try {
-			resources = packageManager.getResourcesForApplication(packageName);
-			int id = resources.getIdentifier(resource, "drawable", packageName);
-			return mIconCache.getFullResIcon(resources, id);
-		} catch (NameNotFoundException e) {
-		}
-		return null;
-	}
-
 	/**
 	 * Make an ShortcutInfo object for a shortcut that isn't an application.
 	 */
-	public ShortcutInfo getShortcutInfo(Cursor c, Context context,
+	private ShortcutInfo getShortcutInfo(Cursor c, Context context,
 			int iconTypeIndex, int iconPackageIndex, int iconResourceIndex,
 			int iconIndex, int titleIndex) {
 

@@ -35,8 +35,6 @@ public class PagedViewIcon extends TextView {
         void iconPressed(PagedViewIcon icon);
     }
 
-    @SuppressWarnings("unused")
-    private static final String TAG = "PagedViewIcon";
     private static final float PRESS_ALPHA = 0.4f;
 
     private PagedViewIcon.PressedCallback mPressedCallback;

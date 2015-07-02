@@ -114,8 +114,6 @@ public class LauncherAppWidgetHostView extends AppWidgetHostView implements Touc
     @Override
     public void onTouchComplete() {
         if (!mLongPressHelper.hasPerformedLongPress()) {
-            // If a long press has been performed, we don't want to clear the record of that since
-            // we still may be receiving a touch up which we want to intercept
             mLongPressHelper.cancelLongPress();
         }
     }

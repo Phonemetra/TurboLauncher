@@ -18,57 +18,62 @@
 
 <resources>
 
-    <!-- DrawableStateProxyView specific attributes. These attributes are used to customize
-         a DrawableStateProxyView view in XML files. -->
+    <!--
+         DrawableStateProxyView specific attributes. These attributes are used to customize
+         a DrawableStateProxyView view in XML files.
+    -->
     <declare-styleable name="DrawableStateProxyView">
+
         <!-- The source view to delegate touch presses events to. -->
         <attr name="sourceViewId" format="integer" />
     </declare-styleable>
 
-    <!-- Cling specific attributes. These attributes are used to customize
-         the cling in XML files. -->
-    <declare-styleable name="Cling">
-        <!-- Used to identify how to draw the cling bg -->
-        <attr name="drawIdentifier" format="string"  />
-    </declare-styleable>
-
-    <!-- Page Indicator specific attributes. These attributes are used to customize
-         the cling in XML files. -->
+    <!-- Page Indicator specific attributes. These attributes are used to customize -->
     <declare-styleable name="PageIndicator">
-        <!-- Used to identify how to draw the cling bg -->
-        <attr name="windowSize" format="integer"  />
+        <attr name="windowSize" format="integer" />
     </declare-styleable>
 
-    <!-- Workspace specific attributes. These attributes are used to customize
-         the workspace in XML files. -->
+    <!--
+         Workspace specific attributes. These attributes are used to customize
+         the workspace in XML files.
+    -->
     <declare-styleable name="Workspace">
+
         <!-- The first screen the workspace should display. -->
-        <attr name="defaultScreen" format="integer"  />
+        <attr name="defaultScreen" format="integer" />
         <!-- The number of horizontal cells in the CellLayout -->
-        <attr name="cellCountX" format="integer"  />
+        <attr name="cellCountX" format="integer" />
         <!-- The number of vertical cells in the CellLayout -->
-        <attr name="cellCountY" format="integer"  />
+        <attr name="cellCountY" format="integer" />
     </declare-styleable>
-    
-    <!-- Hotseat specific attributes. These attributes are used to customize
-         the hotseat in XML files. -->
+
+    <!--
+         Hotseat specific attributes. These attributes are used to customize
+         the hotseat in XML files.
+    -->
     <declare-styleable name="Hotseat">
+
         <!-- The number of horizontal cells in the CellLayout -->
         <attr name="cellCountX" />
         <!-- The number of vertical cells in the CellLayout -->
         <attr name="cellCountY" />
     </declare-styleable>
 
-    <!-- CellLayout specific attributes. These attributes are used to customize
-         a CellLayout view in XML files. -->
+    <!--
+         CellLayout specific attributes. These attributes are used to customize
+         a CellLayout view in XML files.
+    -->
     <declare-styleable name="CellLayout">
+
         <!-- The width of a single cell -->
-        <attr name="cellWidth" format="dimension"  />
+        <attr name="cellWidth" format="dimension" />
         <!-- The height of a single cell -->
-        <attr name="cellHeight" format="dimension"  />
-        <!-- An override for the width and height gap to allow users to specify
+        <attr name="cellHeight" format="dimension" />
+        <!--
+             An override for the width and height gap to allow users to specify
              a specific size for the page using spacing instead of resolving the
-             spacing from the width of the page -->
+             spacing from the width of the page
+        -->
         <attr name="widthGap" format="dimension" />
         <attr name="heightGap" format="dimension" />
         <!-- The max gap size for each dimension -->
@@ -77,6 +82,7 @@
 
     <!-- StrokedTextView specific attributes. -->
     <declare-styleable name="StrokedTextView">
+
         <!-- The color of the stroke outline -->
         <attr name="strokeColor" format="color" />
         <!-- The color of the text -->
@@ -87,14 +93,18 @@
 
     <!-- HolographicLinearLayout specific attributes. -->
     <declare-styleable name="HolographicLinearLayout">
+
         <!-- The source view to generate and apply the drawable states to/from -->
         <attr name="sourceImageViewId" format="integer" />
         <attr name="stateHotwordOn" format="boolean" />
     </declare-styleable>
 
-    <!-- PagedView specific attributes. These attributes are used to customize
-         a PagedView view in XML files. -->
+    <!--
+         PagedView specific attributes. These attributes are used to customize
+         a PagedView view in XML files.
+    -->
     <declare-styleable name="PagedView">
+
         <!-- A spacing override for the icons within a page -->
         <attr name="pageLayoutWidthGap" format="dimension" />
         <attr name="pageLayoutHeightGap" format="dimension" />
@@ -108,9 +118,12 @@
         <attr name="pageIndicator" format="reference" />
     </declare-styleable>
 
-    <!-- AppsCustomizePagedView specific attributes.  These attributes are used to
-         customize an AppsCustomizePagedView in xml files. -->
+    <!--
+         AppsCustomizePagedView specific attributes.  These attributes are used to
+         customize an AppsCustomizePagedView in xml files.
+    -->
     <declare-styleable name="AppsCustomizePagedView">
+
         <!-- Max number of cells of applications horizontally -->
         <attr name="maxAppCellCountX" format="integer" />
         <!-- Max number of cells of applications vertically -->
@@ -123,10 +136,6 @@
         <attr name="widgetCountX" format="integer" />
         <!-- Number of widgets vertically -->
         <attr name="widgetCountY" format="integer" />
-        <!-- The x index of the item to be focused in the cling -->
-        <attr name="clingFocusedX" format="integer" />
-        <!-- The y index of the item to be focused in the cling -->
-        <attr name="clingFocusedY" format="integer" />
     </declare-styleable>
 
     <!-- XML attributes used by default_workspace.xml -->
@@ -139,7 +148,7 @@
         <attr name="y" format="string" />
         <attr name="spanX" format="string" />
         <attr name="spanY" format="string" />
-        <attr name="icon" format="reference" />  
+        <attr name="icon" format="reference" />
         <attr name="title" format="reference" />
         <attr name="uri" format="string" />
     </declare-styleable>
@@ -150,13 +159,6 @@
     <declare-styleable name="Include">
         <attr name="workspace" format="reference" />
     </declare-styleable>
-
-    <!-- Only used in the device overlays -->
-    <declare-styleable name="CustomClingTitleText">
-    </declare-styleable>
-    <declare-styleable name="CustomClingText">
-    </declare-styleable>
-
     <declare-styleable name="SlidingUpPanelLayout">
         <attr name="panelHeight" format="dimension" />
         <attr name="shadowHeight" format="dimension" />
@@ -164,7 +166,7 @@
         <attr name="fadeColor" format="color" />
         <attr name="flingVelocity" format="integer" />
         <attr name="dragView" format="reference" />
-        <attr name="overlay" format="boolean"/>
+        <attr name="overlay" format="boolean" />
     </declare-styleable>
 
 </resources>

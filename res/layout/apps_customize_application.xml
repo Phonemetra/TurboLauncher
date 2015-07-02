@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright (C) 2011 The Android Open Source Project
+<!-- Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,10 +14,15 @@
      limitations under the License.
 -->
 
-<com.phonemetra.turbo.launcher.PagedViewIcon xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/application_icon"
+<com.phonemetra.turbo.launcher.PagedViewIcon
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    
+
     style="@style/WorkspaceIcon.AppsCustomize"
+
+    android:id="@+id/application_icon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/focusable_view_bg"
-    android:focusable="true" />
+    
+    android:focusable="true"
+    android:background="@drawable/focusable_view_bg" />

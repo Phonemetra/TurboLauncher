@@ -22,6 +22,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import com.phonemetra.turbo.launcher.R;
 
 public class Hotseat extends FrameLayout {
-    
+    private static final String TAG = "Hotseat";
 
     private CellLayout mContent;
 
@@ -135,7 +136,8 @@ public class Hotseat extends FrameLayout {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        
+        // We don't want any clicks to go through to the hotseat unless the workspace is in
+        // the normal state.
         if (mLauncher.getWorkspace().isSmall()) {
             return true;
         }
@@ -166,6 +168,7 @@ public class Hotseat extends FrameLayout {
             for (AppInfo info: allApps) {
                 ComponentName cn = info.intent.getComponent();
                 if (!onWorkspace.contains(cn)) {
+                    Log.d(TAG, "Adding to 'more apps': " + info.intent);
                     ShortcutInfo si = info.makeShortcut();
                     fi.add(si);
                 }

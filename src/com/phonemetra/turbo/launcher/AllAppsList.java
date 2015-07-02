@@ -66,7 +66,6 @@ class AllAppsList {
 
     public void clear() {
         data.clear();
-        // TODO: do we clear these too?
         added.clear();
         removed.clear();
         modified.clear();
