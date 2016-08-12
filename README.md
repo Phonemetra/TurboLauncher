@@ -1,5 +1,4 @@
-# TurboLauncher
-Turbo Launcher®
+<h1 align="center">Turbo Launcher®</h1>
 
 ## License
 
