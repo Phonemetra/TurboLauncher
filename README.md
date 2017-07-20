@@ -3,9 +3,10 @@
 <p align="center">Turbo Launcher® is an open-source Android™ Launcher.</p>
 <p align="center"><a target="_blank" href="https://play.google.com/store/apps/details?id=com.phonemetra.Turbo.Launcher"><img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="50%" width="50%"></a></p>
 
+[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Phonemetra/TurboLauncher/blog/master/LICENSE)
 ## License
 
-    Copyright 2013-2017 PHONEMETRA INC
+    Copyright 2013 - 2017 PHONEMETRA 
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -18,4 +19,5 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
 
