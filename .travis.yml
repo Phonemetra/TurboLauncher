@@ -52,3 +52,18 @@ before_script:
  
 script:
  - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+
+before_deploy:
+- cp $TRAVIS_BUILD_DIR/example_keystore.jks $HOME
+- cd app/build/outputs/apk/
+- jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $HOME/example_keystore.jks -storepass $storepass -keypass $keypass app-release-unsigned.apk ExampleKeystoreAlias
+
+# Verification
+- jarsigner -verify app-release-unsigned.apk
+- "${ANDROID_HOME}/build-tools/26.0.0/zipalign -v 4 app-release-unsigned.apk TurboLauncher.apk"
+
+deploy:
+  provider: releases
+  file: TurboLauncher.apk
+  skip_cleanup: true
+
