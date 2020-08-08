@@ -13,6 +13,7 @@
 <p><strong>Information Collection and Use</strong></p>
 <p>For a better experience while using our app, We may require you to provide certain personally identifiable information. The information that we request through the app is retained on your device and is not collected by us in any way.</p> 
 <p>The app does use third party services that may collect information used to identify you.</p>
-<p>Privacy policy links of third party service providers used by the app:</p>
+<p>Privacy policy links of third party providers used by the app:</p>
 <ul><li><a href="https://www.google.com/policies/privacy/" target="_blank">Google Play apps</a></li> <li><a href="https://support.google.com/admob/answer/6128543?hl=en" target="_blank">AdMob</a></li></ul>
 <p><strong>Log Data</strong></p>
+<p>We want to inform you that whenever you use our app, in the case of an error in the app we collect data and information (through third party providers) on your phone called Log Data. This Log Data may include information such as your device name, operating system version, the configuration of the app, the time and date of your use of the app and other statistics.</p> 
