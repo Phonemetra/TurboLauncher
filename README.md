@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/Phonemetra/TurboLauncher/blog/master/LICENSE)
 ## License
 
-    Copyright 2013 - 2019 PHONEMETRA INC
+    Copyright 2013 - 2020 PHONEMETRA INC
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
