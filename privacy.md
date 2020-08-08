@@ -11,3 +11,4 @@
     which is accessible at Turbo Launcher, unless otherwise defined in this Privacy Policy.</p>
 
 <p><strong>Information Collection and Use</strong></p>
+<p>For a better experience while using our Service, We may require you to provide certain personally identifiable information. The information that we request through the app is retained on your device and is not collected by us in any way.</p> 
