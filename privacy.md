@@ -15,3 +15,4 @@
 <p>The app does use third party services that may collect information used to identify you.</p>
 <p>Privacy policy links of third party service providers used by the app:</p>
 <ul><li><a href="https://www.google.com/policies/privacy/" target="_blank">Google Play apps</a></li> <li><a href="https://support.google.com/admob/answer/6128543?hl=en" target="_blank">AdMob</a></li></ul>
+<p><strong>Log Data</strong></p>
