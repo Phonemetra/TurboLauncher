@@ -17,3 +17,8 @@
 <ul><li><a href="https://www.google.com/policies/privacy/" target="_blank">Google Play apps</a></li> <li><a href="https://support.google.com/admob/answer/6128543?hl=en" target="_blank">AdMob</a></li></ul>
 <p><strong>Log Data</strong></p>
 <p>We want to inform you that whenever you use our app, in the case of an error in the app we collect data and information (through third party providers) on your phone called Log Data. This Log Data may include information such as your device name, operating system version, the configuration of the app, the time and date of your use of the app and other statistics.</p> 
+
+<p><strong>Cookies</strong></p>
+
+<p>Cookies are files with small amount of data that are commonly used as an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your device's internal memory.</p>
+<p>This app does not use cookies explicitly. However, the app may use third party code and libraries that use cookies to collect information and improve their services.</p> 
