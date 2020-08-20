@@ -22,3 +22,6 @@
 
 <p>Cookies are files with small amount of data that are commonly used as an anonymous unique identifier. These are sent to your browser from the website that you visit and are stored on your device's internal memory.</p>
 <p>This app does not use cookies explicitly. However, the app may use third party code and libraries that use cookies to collect information and improve their services.</p> 
+
+<p><strong>Security</strong></p>
+<p>Our app guarantees high security standards, it is constantly updated and improved for this purpourse, your information will not be collected by us in any way, it will always be accessible and protected on your phone, when using our app. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.</p>
